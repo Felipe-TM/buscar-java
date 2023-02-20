@@ -1,0 +1,18 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: mariadb
+    restart: always
+    container_name: mariadb-01
+    environment:
+      MARIADB_ROOT_PASSWORD: 123456
+    ports:
+      - 3300:3306
+    command: --init-file /data/application/init.sql
+    volumes:
+        - ./init.sql:/data/application/init.sql
+        
+
+        

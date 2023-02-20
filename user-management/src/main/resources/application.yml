@@ -1,0 +1,19 @@
+server:
+   port: 8080
+   
+spring:
+   application:
+      name: UserManagementApp
+   datasource:
+      url: jdbc:mariadb://localhost:3300/userdb_01
+      driverClassName: org.mariadb.jdbc.Driver
+      username: root
+      password: 123456
+      
+   jpa:
+      properties:
+         hibernate:
+            dialect: org.hibernate.dialect.MariaDB102Dialect
+  
+      database-plataform: org.hibernate.dialect.MariaDB102Dialect
+      show-sql: true

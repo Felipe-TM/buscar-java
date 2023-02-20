@@ -1,0 +1,6 @@
+/target/
+
+.yml
+
+!application.yml
+!mariadb-docker.yml
