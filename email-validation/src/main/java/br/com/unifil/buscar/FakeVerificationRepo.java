@@ -7,12 +7,17 @@ import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 /**
+ * FakeVerificationRepo is an implementation of the {@link VerificationRepository}
+ * interface. It provides resources for local testing and should not be used in a 
+ * real environment. 
+ * 
+ * @deprecated
  * @author Felipe Torres
  * @version 1.0
  * @since 1.0
  * */
 @Repository(value = "FakeVerificationRepo")
-public class FakeVerificationRepo implements VerificationRepository {
+public abstract class FakeVerificationRepo implements VerificationRepository {
 	
 	private Map<String, EmailVerificationRecord> fakeDB = new HashMap<>();
 

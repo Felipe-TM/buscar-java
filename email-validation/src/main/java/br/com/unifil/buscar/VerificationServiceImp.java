@@ -42,7 +42,7 @@ public class VerificationServiceImp implements VerificationService {
 	 * */
 
 	@Autowired
-	public VerificationServiceImp(@Qualifier("FakeVerificationRepo") VerificationRepository repository, JavaMailSender mailSender) {
+	public VerificationServiceImp(@Qualifier("RedisRepository") VerificationRepository repository, JavaMailSender mailSender) {
 		this.COMPANY_EMAIL_ADDRESS = "";
 		this.COMPANY_NAME = "";
 		this.BASE_URL = "";
@@ -88,6 +88,7 @@ public class VerificationServiceImp implements VerificationService {
 			if (!code.equals(userRequest.verificationCode()))
 				return false;
 			repository.delete(username);
+			System.out.println("Email was Validated");
 			return true;
 
 		} catch (IllegalArgumentException e) {

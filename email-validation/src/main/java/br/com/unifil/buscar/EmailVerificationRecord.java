@@ -14,7 +14,7 @@ package br.com.unifil.buscar;
  *  @param verificationCode  
  * */
 
-public record EmailVerificationRecord(
+public record EmailVerificationRecord (
 		String username,
 		String email,
 		String verificationCode
