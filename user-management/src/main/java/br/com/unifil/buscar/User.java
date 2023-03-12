@@ -1,9 +1,9 @@
 package br.com.unifil.buscar;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Transient;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Transient;
 
 /**
  * User is the POJO class to store all the users information, it also makes the
@@ -119,6 +119,10 @@ public class User implements UserDetails {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public static Builder builder() {
+		return new Builder();
 	}
 
 	/**
