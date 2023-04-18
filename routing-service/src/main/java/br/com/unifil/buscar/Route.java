@@ -15,7 +15,7 @@ public class Route {
 
 	private static final Unit DEFAULT_UNITS = Unit.METRIC;
 	private static final TrafficModel DEFAULT_TRAFFIC_MODEL = TrafficModel.BEST_GUESS;
-	private static final TransitRoutingPreference DEFAULT_TRANSIT_ROUTING_PREFERENCE = TransitRoutingPreference.LESS_WALKING;
+	private static final TransitRoutingPreference DEFAULT_ROUTING_PREFERENCE = TransitRoutingPreference.LESS_WALKING;
 
 	private String destination;
 	private String origin;
@@ -71,7 +71,7 @@ public class Route {
 		private String region;
 		private TrafficModel trafficModel = DEFAULT_TRAFFIC_MODEL;
 		private List<TransitMode> transitMode;
-		private TransitRoutingPreference transitRoutingPreference = DEFAULT_TRANSIT_ROUTING_PREFERENCE;
+		private TransitRoutingPreference transitRoutingPreference = DEFAULT_ROUTING_PREFERENCE;
 		private Unit units = DEFAULT_UNITS;
 		private List<String> waypoints;
 

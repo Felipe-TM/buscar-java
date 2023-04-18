@@ -31,7 +31,7 @@ public class VerificationServiceImp implements VerificationService {
 	private final String BASE_URL;
 
 	private final VerificationRepository repository;
-	JavaMailSender mailSender;
+	private final JavaMailSender mailSender;
 	
 	/**
 	 * Class constructor specifying the dependencies to be injected.

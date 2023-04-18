@@ -4,20 +4,20 @@ import java.util.Optional;
 
 /**
  * VerificationRepository interface provides a common set of
- * methods required to implement 
+ * methods required to do email verification.
  * 
  * @author Felipe Torres
  * @version 1.0
  * @since 1.0
  * */
 
-public interface VerificationRepository {
+public interface VerificationRepository{
 	
 	/**
 	 * Gets a {@link EmailVerificationRecord} from the database with given 
 	 * username.
 	 * <p>
-	 * It might return either an EmailVerificationRecord or {@code null} 
+	 * It returns either an EmailVerificationRecord or {@code null} 
 	 *  
 	 * @param username
 	 * @return {@link Optional}
