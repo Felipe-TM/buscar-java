@@ -6,4 +6,4 @@ O projeto ainda encontra-se em estado de desenvolvimento, com data prevista para
 <br><br><br>
 
 ## Overview da arquitetura do projeto
-![alt](buscar-architecture.png)
+![alt](buscar-architecture1.png)
