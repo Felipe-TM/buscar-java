@@ -1,3 +1,5 @@
 /target/
 
 /src/main/resources/application-dev.yml
+
+/doc/
