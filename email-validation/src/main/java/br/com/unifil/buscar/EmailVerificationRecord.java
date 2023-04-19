@@ -7,11 +7,7 @@ package br.com.unifil.buscar;
  *  
  *  @author Felipe Torres
  *  @version 1.0
- *  @since 1.0
- *  
- *  @param useranme
- *  @param email
- *  @param verificationCode  
+ *  @since 1.0  
  * */
 
 public record EmailVerificationRecord (

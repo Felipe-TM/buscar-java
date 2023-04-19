@@ -47,6 +47,7 @@ public class VerificationController {
 	 * Url the user needs to access to verify his email address.
 	 * 
 	 * @param verificationRequest the EmailVerificationRecord from the Json in the request body
+	 * @return {@link ResponseEntity}
 	 * @since 1.0 
 	 * */
 	
@@ -78,6 +79,7 @@ public class VerificationController {
 	 * 
 	 * @param verificationCode a String with the verification code
 	 * @param username a String with the username
+	 * @return {@link ResponseEntity}
 	 * @since 1.0
 	 * */
 	
