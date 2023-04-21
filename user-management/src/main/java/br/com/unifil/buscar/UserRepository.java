@@ -25,8 +25,10 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	 * Gets an user with given username.
 	 * <p>
 	 * This metehod returns an Optional, which may be a 
-	 * User or Null. 
+	 * User or Null.
 	 * 
+	 * @param username String
+	 * @return {@link Optional}
 	 * */
 	@Query("SELECT user FROM user_table user WHERE user.username = ?1")
 	Optional<User> loadByUsername(String username);
