@@ -5,5 +5,5 @@
     <artifactId>buscar-app</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <artifactId>sms-service</artifactId>
+  <artifactId>rider-service</artifactId>
 </project>

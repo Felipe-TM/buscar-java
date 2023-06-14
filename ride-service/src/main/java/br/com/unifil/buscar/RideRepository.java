@@ -1,5 +1,5 @@
 package br.com.unifil.buscar;
 
-public interface RouteService {
+public interface RideRepository {
 
 }

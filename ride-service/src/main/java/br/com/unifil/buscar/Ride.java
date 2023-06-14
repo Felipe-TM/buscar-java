@@ -2,42 +2,39 @@ package br.com.unifil.buscar;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.maps.DirectionsApi.RouteRestriction;
 import com.google.maps.model.TrafficModel;
 import com.google.maps.model.TransitMode;
 import com.google.maps.model.TransitRoutingPreference;
 import com.google.maps.model.Unit;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class Route {
+public class Ride {
 
 	private static final Unit DEFAULT_UNITS = Unit.METRIC;
 	private static final TrafficModel DEFAULT_TRAFFIC_MODEL = TrafficModel.BEST_GUESS;
 	private static final TransitRoutingPreference DEFAULT_ROUTING_PREFERENCE = TransitRoutingPreference.LESS_WALKING;
+	private static final RideStatus DEFAULT_RIDE_STATUS = RideStatus.PENDING;
 
 	private String destination;
 	private String origin;
 	private boolean alternatives;
-	@JsonAlias("arrival_time")
 	private String arrivalTime;
 	private List<RouteRestriction> avoid;
-	@JsonAlias("departure_time")
 	private String departureTime;
 	private String language;
 	private List<String> mode;
 	private String region;
-	@JsonAlias("traffic_model")
 	private TrafficModel trafficModel;
-	@JsonAlias("transit_mode")
 	private List<TransitMode> transitMode;
-	@JsonAlias("transit_routing_preference")
 	private TransitRoutingPreference transitRoutingPreference;
 	private Unit units;
 	private List<String> waypoints;
 
-	public Route(Builder builder) {
+	private RideStatus rideStatus;
+	private String driverID;
+	private String userID;
+
+	public Ride(Builder builder) {
 		this.destination = builder.destination;
 		this.origin = builder.origin;
 		this.alternatives = builder.alternatives;
@@ -52,10 +49,145 @@ public class Route {
 		this.transitRoutingPreference = builder.transitRoutingPreference;
 		this.units = builder.units;
 		this.waypoints = builder.waypoints;
+		this.rideStatus = builder.rideStatus;
+		this.driverID = builder.driverID;
+		this.userID = builder.userID;
 	}
 
 	public static Builder builder() {
 		return new Builder();
+	}
+
+	public String getDestination() {
+		return destination;
+	}
+
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
+
+	public String getOrigin() {
+		return origin;
+	}
+
+	public void setOrigin(String origin) {
+		this.origin = origin;
+	}
+
+	public boolean isAlternatives() {
+		return alternatives;
+	}
+
+	public void setAlternatives(boolean alternatives) {
+		this.alternatives = alternatives;
+	}
+
+	public String getArrivalTime() {
+		return arrivalTime;
+	}
+
+	public void setArrivalTime(String arrivalTime) {
+		this.arrivalTime = arrivalTime;
+	}
+
+	public List<RouteRestriction> getAvoid() {
+		return avoid;
+	}
+
+	public void setAvoid(List<RouteRestriction> avoid) {
+		this.avoid = avoid;
+	}
+
+	public String getDepartureTime() {
+		return departureTime;
+	}
+
+	public void setDepartureTime(String departureTime) {
+		this.departureTime = departureTime;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	public List<String> getMode() {
+		return mode;
+	}
+
+	public void setMode(List<String> mode) {
+		this.mode = mode;
+	}
+
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
+	}
+
+	public TrafficModel getTrafficModel() {
+		return trafficModel;
+	}
+
+	public void setTrafficModel(TrafficModel trafficModel) {
+		this.trafficModel = trafficModel;
+	}
+
+	public List<TransitMode> getTransitMode() {
+		return transitMode;
+	}
+
+	public void setTransitMode(List<TransitMode> transitMode) {
+		this.transitMode = transitMode;
+	}
+
+	public TransitRoutingPreference getTransitRoutingPreference() {
+		return transitRoutingPreference;
+	}
+
+	public void setTransitRoutingPreference(TransitRoutingPreference transitRoutingPreference) {
+		this.transitRoutingPreference = transitRoutingPreference;
+	}
+
+	public Unit getUnits() {
+		return units;
+	}
+
+	public void setUnits(Unit units) {
+		this.units = units;
+	}
+
+	public List<String> getWaypoints() {
+		return waypoints;
+	}
+
+	public void setWaypoints(List<String> waypoints) {
+		this.waypoints = waypoints;
+	}
+
+	public RideStatus getRideStatus() {
+		return rideStatus;
+	}
+
+	public void setRideStatus(RideStatus rideStatus) {
+		this.rideStatus = rideStatus;
+	}
+
+	public String getDriverID() {
+		return driverID;
+	}
+
+	public void setDriverID(String driverID) {
+		this.driverID = driverID;
+	}
+
+	public String getUserID() {
+		return userID;
 	}
 
 	static class Builder {
@@ -74,6 +206,10 @@ public class Route {
 		private TransitRoutingPreference transitRoutingPreference = DEFAULT_ROUTING_PREFERENCE;
 		private Unit units = DEFAULT_UNITS;
 		private List<String> waypoints;
+
+		private RideStatus rideStatus = DEFAULT_RIDE_STATUS;
+		private String driverID;
+		private String userID;
 
 		public void destination(String destination) {
 			this.destination = destination;
@@ -137,10 +273,21 @@ public class Route {
 			this.waypoints = waypoints;
 		}
 
-		public Route build() {
-			return new Route(this);
+		public void rideStatus(RideStatus rideStatus) {
+			this.rideStatus = rideStatus;
+		}
+
+		public void driverID(String driverID) {
+			this.driverID = driverID;
+		}
+
+		public void userID(String userID) {
+			this.userID = userID;
+		}
+
+		public Ride build() {
+			return new Ride(this);
 		}
 
 	}
-
 }

@@ -1,8 +1,10 @@
 package br.com.unifil.buscar;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-@Service
-public class RideService {
-
+public interface RideService {
+	
+	public Ride callRide ();
+	public List<Ride> searchRide();
+	public void answerRide ();
 }

@@ -19,6 +19,7 @@
 		<module>routing-service</module>
 		<module>user-management</module>
 		<module>ApiContract</module>
+		<module>rider-service</module>
 	</modules>
 	
 	<dependencyManagement>
