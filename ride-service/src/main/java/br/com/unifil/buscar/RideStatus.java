@@ -5,5 +5,7 @@ public enum RideStatus {
 	PENDING,
 	WAITING_DRIVER,
 	IN_PROGRESS,
-	FINISHED
+	FINISHED,
+	CANCELED;
 }
+

@@ -1,10 +1,9 @@
 package br.com.unifil.buscar;
 
-import java.util.List;
-
 public interface RideService {
 	
-	public Ride callRide ();
-	public List<Ride> searchRide();
-	public void answerRide ();
+	public RideRecord getRide(String requesterId, String rideId) throws IllegalArgumentException;
+	boolean cancelRide(String requesterId, String rideId) throws IllegalArgumentException;
+	void acceptRide(String requesterId, String rideId) throws IllegalArgumentException;
+	void callRide(Ride ride);
 }

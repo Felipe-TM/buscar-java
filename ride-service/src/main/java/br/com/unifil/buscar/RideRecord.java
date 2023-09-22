@@ -2,6 +2,7 @@ package br.com.unifil.buscar;
 
 import java.util.List;
 
+import com.google.gson.Gson;
 import com.google.maps.DirectionsApi.RouteRestriction;
 import com.google.maps.model.TrafficModel;
 import com.google.maps.model.TransitMode;
@@ -22,4 +23,14 @@ public record RideRecord(
 		List<TransitMode> transitMode,
 		TransitRoutingPreference transitRoutingPreference,
 		Unit units,
-		List<String> waypoints) {}
+		List<String> waypoints,
+		RideStatus rideStatus,
+		String driverId,
+		String userId,
+		String rideID
+		) {
+	
+	public String toJson() {
+		return new Gson().toJson(this);
+	}
+}

@@ -33,6 +33,7 @@ public class Ride {
 	private RideStatus rideStatus;
 	private String driverID;
 	private String userID;
+	private String rideID;
 
 	public Ride(Builder builder) {
 		this.destination = builder.destination;
@@ -52,11 +53,12 @@ public class Ride {
 		this.rideStatus = builder.rideStatus;
 		this.driverID = builder.driverID;
 		this.userID = builder.userID;
+		this.rideID = builder.rideID;
 	}
 
 	public static Builder builder() {
 		return new Builder();
-	}
+	}	
 
 	public String getDestination() {
 		return destination;
@@ -74,7 +76,7 @@ public class Ride {
 		this.origin = origin;
 	}
 
-	public boolean isAlternatives() {
+	public boolean getAlternatives() {
 		return alternatives;
 	}
 
@@ -190,6 +192,14 @@ public class Ride {
 		return userID;
 	}
 
+	public String getRideID() {
+		return rideID;
+	}
+
+	public void setRideID(String rideID) {
+		this.rideID = rideID;
+	}
+
 	static class Builder {
 
 		private String destination;
@@ -210,79 +220,102 @@ public class Ride {
 		private RideStatus rideStatus = DEFAULT_RIDE_STATUS;
 		private String driverID;
 		private String userID;
+		private String rideID;
 
-		public void destination(String destination) {
+		public Builder destination(String destination) {
 			this.destination = destination;
+			return this;
 		}
 
-		public void origin(String origin) {
+		public Builder origin(String origin) {
 			this.origin = origin;
+			return this;
 		}
 
-		public void alternatives(boolean alternatives) {
+		public Builder alternatives(boolean alternatives) {
 			this.alternatives = alternatives;
+			return this;
 		}
 
-		public void arrivalTime(String arrivalTime) {
+		public Builder arrivalTime(String arrivalTime) {
 			this.arrivalTime = arrivalTime;
+			return this;
 		}
 
-		public void avoid(RouteRestriction... avoid) {
+		public Builder avoid(RouteRestriction... avoid) {
 			for (RouteRestriction routeRestriction : avoid) {
 				this.avoid.add(routeRestriction);
 			}
+			return this;
 		}
 
-		public void departureTime(String departureTime) {
+		public Builder departureTime(String departureTime) {
 			this.departureTime = departureTime;
+			return this;
 		}
 
-		public void language(String language) {
+		public Builder language(String language) {
 			this.language = language;
+			return this;
 		}
 
-		public void mode(String... modes) {
+		public Builder mode(String... modes) {
 			for (String mode : modes) {
 				this.mode.add(mode);
 			}
+			return this;
 		}
 
-		public void region(String region) {
+		public Builder region(String region) {
 			this.region = region;
+			return this;
 		}
 
-		public void trafficModel(TrafficModel trafficModel) {
+		public Builder trafficModel(TrafficModel trafficModel) {
 			this.trafficModel = trafficModel;
+			return this;
 		}
 
-		public void transitMode(TransitMode... transitModes) {
+		public Builder transitMode(TransitMode... transitModes) {
 			for (TransitMode transitMode : transitModes) {
 				this.transitMode.add(transitMode);
 			}
+			return this;
 		}
 
-		public void transitRoutingPreference(TransitRoutingPreference transitRoutingPreference) {
+		public Builder transitRoutingPreference(TransitRoutingPreference transitRoutingPreference) {
 			this.transitRoutingPreference = transitRoutingPreference;
+			return this;
 		}
 
-		public void units(Unit units) {
+		public Builder units(Unit units) {
 			this.units = units;
+			return this;
 		}
 
-		public void waypoints(List<String> waypoints) {
+		public Builder waypoints(List<String> waypoints) {
 			this.waypoints = waypoints;
+			return this;
 		}
 
-		public void rideStatus(RideStatus rideStatus) {
+		public Builder rideStatus(RideStatus rideStatus) {
 			this.rideStatus = rideStatus;
+			return this;
 		}
 
-		public void driverID(String driverID) {
+		public Builder driverID(String driverID) {
 			this.driverID = driverID;
+			return this;
 		}
 
-		public void userID(String userID) {
+		public Builder userID(String userID) {
 			this.userID = userID;
+			return this;
+		}
+		
+		public Builder rideID(String rideID) {
+			this.rideID = rideID;
+			return this;
 		}
 
 		public Ride build() {
