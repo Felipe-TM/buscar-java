@@ -7,23 +7,22 @@ import org.springframework.stereotype.Service;
 public class RideServiceImp implements RideService {
 
 	private RideRepository rideRepository;
+	private EnrollRepository enrollRepository;
 
 	@Autowired
-	public RideServiceImp(RideRepository rideRepository) {
+	public RideServiceImp(RideRepository rideRepository, EnrollRepository enrollRepository) {
 		this.rideRepository = rideRepository;
+		this.enrollRepository = enrollRepository;
 	}
 
 	@Override
-	public void callRide(Ride ride) {
+	public void publishRide(Ride ride) {
 		rideRepository.saveRide(ride);
 	}
 
 	@Override
 	public RideRecord getRide(String requesterId, String rideId) throws IllegalArgumentException {
 		Ride ride = rideRepository.getRideById(rideId);
-
-		if (!requesterId.equals(ride.getUserID()) && !requesterId.equals(ride.getDriverID()))
-			throw new IllegalArgumentException("access denied");
 
 		return new RideRecord(ride.getDestination(),
 				ride.getOrigin(),
@@ -40,9 +39,9 @@ public class RideServiceImp implements RideService {
 				ride.getUnits(),
 				ride.getWaypoints(),
 				ride.getRideStatus(),
-				ride.getDriverID(),
-				ride.getUserID(),
-				ride.getRideID());
+				ride.getDriverId(),
+				ride.getEnrolledPassengers(),
+				ride.getRideId());
 	}
 
 	@Override
@@ -50,17 +49,24 @@ public class RideServiceImp implements RideService {
 		
 		Ride ride = rideRepository.getRideById(rideId);
 		
-		if (!requesterId.equals(ride.getUserID()) && !requesterId.equals(ride.getDriverID()))
-			throw new IllegalArgumentException("access denied");
 		return false;
 	}
 
 	@Override
 	public void acceptRide(String driverId, String rideId) throws IllegalArgumentException {
 		Ride ride = rideRepository.getRideById(rideId);
-		ride.setDriverID(driverId);
 		ride.setRideStatus(RideStatus.WAITING_DRIVER);
 		rideRepository.saveRide(ride);		
+	}
+
+	@Override
+	public void enrollUserToRide(String rideId, String passangerId) {
+		Ride ride = rideRepository.getRideById(rideId);
+		ride.setEnrolledPassengers(passangerId);
+		rideRepository.saveRide(ride);
+		EnrollResquest resquest = new EnrollResquest(passangerId, rideId, EnrollStatus.SENT);
+		enrollRepository.saveRequest(resquest);
+		
 	}
 
 }

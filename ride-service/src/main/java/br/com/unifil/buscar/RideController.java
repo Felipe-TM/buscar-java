@@ -25,15 +25,15 @@ public class RideController {
 		this.rideService = rideService;
 	}
 
-	@PostMapping("api/v1/callride")
-	public ResponseEntity<String> callRide(@RequestBody String rideDetails) {
+	@PostMapping("api/v1/publishride")
+	public ResponseEntity<String> publishRide(@RequestBody String rideDetails) {
 		JsonObject jsonRequest = JsonParser.parseString(rideDetails).getAsJsonObject();
 
 		try {
 
 			Ride rideRequest = Ride.builder()
-					.rideID(UUID.randomUUID().toString())
-					.userID(jsonRequest.get("userID").getAsString())
+					.rideId(UUID.randomUUID().toString())
+					.driverId(jsonRequest.get("driverId").getAsString())
 					.origin(jsonRequest.get("origin").getAsString())
 					.destination(jsonRequest.get("destination").getAsString())
 					.arrivalTime(jsonRequest.get("arrivalTime").getAsString())
@@ -49,8 +49,8 @@ public class RideController {
 				rideRequest.setTransitRoutingPreference(
 						TransitRoutingPreference.valueOf(jsonRequest.get("transitRoutingPreference").getAsString()));
 			
-			rideService.callRide(rideRequest);
-			return ResponseEntity.status(HttpStatus.CREATED).body(rideRequest.getRideID());
+			rideService.publishRide(rideRequest);
+			return ResponseEntity.status(HttpStatus.CREATED).body(rideRequest.getRideId());
 
 		} catch (NullPointerException | IllegalArgumentException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -59,11 +59,11 @@ public class RideController {
 
 	@GetMapping("api/v1/getride")
 	public ResponseEntity<String> getRide(@RequestBody String requestBody) {
-		JsonObject request = JsonParser.parseString(requestBody).getAsJsonObject();
+		JsonObject jsonRequest = JsonParser.parseString(requestBody).getAsJsonObject();
 
 		try {
-			RideRecord ride = rideService.getRide(request.get("requesterId").getAsString(),
-					request.get("rideID").getAsString());
+			RideRecord ride = rideService.getRide(jsonRequest.get("requesterId").getAsString(),
+					jsonRequest.get("rideID").getAsString());
 			return ResponseEntity.status(HttpStatus.OK).body(ride.toJson());
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
@@ -71,16 +71,17 @@ public class RideController {
 	}
 
 	@PostMapping("api/v1/cancelride")
-	public ResponseEntity<String> cancelRide(@RequestBody String requesterId, String rideId) {
+	public ResponseEntity<String> cancelRide(@RequestBody String requestBody) {
+		JsonObject jsonRequest = JsonParser.parseString(requestBody).getAsJsonObject();
 		try {
-			rideService.cancelRide(requesterId, rideId);
+			//rideService.cancelRide(requesterId, r);
 			return ResponseEntity.status(HttpStatus.OK).body(null);
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
 		}
 	}
 
-	@PostMapping("api/v1/acceptride")
+	@PostMapping("api/v1/acceptuser")
 	public ResponseEntity<String> acceptRide(@RequestBody String requestBody) {
 		JsonObject jsonRequest = JsonParser.parseString(requestBody).getAsJsonObject();
 		try {
@@ -88,6 +89,18 @@ public class RideController {
 			return ResponseEntity.status(HttpStatus.OK).body(null);
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+		}
+	}
+	
+	@PostMapping("api/v1/enrolltoride")
+	public ResponseEntity<String> enrollToRide(@RequestBody String requestBody) {
+		JsonObject jsonRequest = JsonParser.parseString(requestBody).getAsJsonObject();
+		
+		try {
+			rideService.enrollUserToRide(jsonRequest.get("userId").getAsString(), jsonRequest.get("rideId").getAsString());
+			return ResponseEntity.status(HttpStatus.CREATED).body(null);
+		} catch (NullPointerException | IllegalArgumentException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 		}
 	}
 }

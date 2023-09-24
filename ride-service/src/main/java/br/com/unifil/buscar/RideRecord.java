@@ -26,7 +26,7 @@ public record RideRecord(
 		List<String> waypoints,
 		RideStatus rideStatus,
 		String driverId,
-		String userId,
+		List<String> enrolledPassengers,
 		String rideID
 		) {
 	

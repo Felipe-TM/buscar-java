@@ -31,9 +31,9 @@ public class Ride {
 	private List<String> waypoints;
 
 	private RideStatus rideStatus;
-	private String driverID;
-	private String userID;
-	private String rideID;
+	private String driverId;
+	private List<String> enrolledPassengers;
+	private String rideId;
 
 	public Ride(Builder builder) {
 		this.destination = builder.destination;
@@ -51,9 +51,8 @@ public class Ride {
 		this.units = builder.units;
 		this.waypoints = builder.waypoints;
 		this.rideStatus = builder.rideStatus;
-		this.driverID = builder.driverID;
-		this.userID = builder.userID;
-		this.rideID = builder.rideID;
+		this.driverId = builder.driverID;
+		this.rideId = builder.rideID;
 	}
 
 	public static Builder builder() {
@@ -180,24 +179,20 @@ public class Ride {
 		this.rideStatus = rideStatus;
 	}
 
-	public String getDriverID() {
-		return driverID;
+	public String getDriverId() {
+		return driverId;
+	}
+	
+	public List<String> getEnrolledPassengers() {
+		return enrolledPassengers;
 	}
 
-	public void setDriverID(String driverID) {
-		this.driverID = driverID;
+	public void setEnrolledPassengers(String enrolledUsers) {
+		this.enrolledPassengers.add(enrolledUsers);
 	}
-
-	public String getUserID() {
-		return userID;
-	}
-
-	public String getRideID() {
-		return rideID;
-	}
-
-	public void setRideID(String rideID) {
-		this.rideID = rideID;
+	
+	public String getRideId() {
+		return rideId;
 	}
 
 	static class Builder {
@@ -219,7 +214,6 @@ public class Ride {
 
 		private RideStatus rideStatus = DEFAULT_RIDE_STATUS;
 		private String driverID;
-		private String userID;
 		private String rideID;
 
 		public Builder destination(String destination) {
@@ -303,17 +297,12 @@ public class Ride {
 			return this;
 		}
 
-		public Builder driverID(String driverID) {
+		public Builder driverId(String driverID) {
 			this.driverID = driverID;
 			return this;
 		}
-
-		public Builder userID(String userID) {
-			this.userID = userID;
-			return this;
-		}
 		
-		public Builder rideID(String rideID) {
+		public Builder rideId(String rideID) {
 			this.rideID = rideID;
 			return this;
 		}

@@ -17,7 +17,7 @@ public class FakeRideRepo implements RideRepository{
 
 	@Override
 	public void saveRide(Ride ride) {
-		fakeDB.put(ride.getRideID(), ride);	
+		fakeDB.put(ride.getRideId(), ride);	
 	}
 
 }
