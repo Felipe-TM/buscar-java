@@ -23,7 +23,7 @@ public class RideServiceImp implements RideService {
 	@Override
 	public RideRecord getRide(String requesterId, String rideId) throws IllegalArgumentException {
 		Ride ride = rideRepository.getRideById(rideId);
-
+		
 		return new RideRecord(ride.getDestination(),
 				ride.getOrigin(),
 				ride.getAlternatives(),
@@ -53,18 +53,26 @@ public class RideServiceImp implements RideService {
 	}
 
 	@Override
-	public void acceptRide(String driverId, String rideId) throws IllegalArgumentException {
+	public void acceptPassenger(String driverId, String rideId, String requestId) throws IllegalArgumentException {
 		Ride ride = rideRepository.getRideById(rideId);
+		EnrollRequest request = enrollRepository.getRequest(requestId);
+		
+		if (!rideId.equals(request.getRideId())) throw new IllegalArgumentException();
+		
+		request.setStatus(EnrollStatus.ACCEPTED);
+		enrollRepository.saveRequest(request);
+		
+		ride.setEnrolledPassengers(request.getPassangerId());
 		ride.setRideStatus(RideStatus.WAITING_DRIVER);
 		rideRepository.saveRide(ride);		
 	}
 
 	@Override
-	public void enrollUserToRide(String rideId, String passangerId) {
+	public void enrollToRide(String rideId, String passangerId) {
 		Ride ride = rideRepository.getRideById(rideId);
 		ride.setEnrolledPassengers(passangerId);
 		rideRepository.saveRide(ride);
-		EnrollResquest resquest = new EnrollResquest(passangerId, rideId, EnrollStatus.SENT);
+		EnrollRequest resquest = new EnrollRequest(rideId, passangerId, EnrollStatus.SENT);
 		enrollRepository.saveRequest(resquest);
 		
 	}

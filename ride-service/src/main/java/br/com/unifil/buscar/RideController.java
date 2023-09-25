@@ -31,8 +31,7 @@ public class RideController {
 
 		try {
 
-			Ride rideRequest = Ride.builder()
-					.rideId(UUID.randomUUID().toString())
+			Ride rideRequest = Ride.builder().rideId(UUID.randomUUID().toString())
 					.driverId(jsonRequest.get("driverId").getAsString())
 					.origin(jsonRequest.get("origin").getAsString())
 					.destination(jsonRequest.get("destination").getAsString())
@@ -44,11 +43,11 @@ public class RideController {
 
 			if (jsonRequest.has("trafficModel"))
 				rideRequest.setTrafficModel(TrafficModel.valueOf(jsonRequest.get("trafficModel").getAsString()));
-			
+
 			if (jsonRequest.has("transitRoutingPreference"))
 				rideRequest.setTransitRoutingPreference(
 						TransitRoutingPreference.valueOf(jsonRequest.get("transitRoutingPreference").getAsString()));
-			
+
 			rideService.publishRide(rideRequest);
 			return ResponseEntity.status(HttpStatus.CREATED).body(rideRequest.getRideId());
 
@@ -74,30 +73,31 @@ public class RideController {
 	public ResponseEntity<String> cancelRide(@RequestBody String requestBody) {
 		JsonObject jsonRequest = JsonParser.parseString(requestBody).getAsJsonObject();
 		try {
-			//rideService.cancelRide(requesterId, r);
+			// rideService.cancelRide(requesterId, r);
 			return ResponseEntity.status(HttpStatus.OK).body(null);
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
 		}
 	}
 
-	@PostMapping("api/v1/acceptuser")
-	public ResponseEntity<String> acceptRide(@RequestBody String requestBody) {
+	@PostMapping("api/v1/acceptPassenger")
+	public ResponseEntity<String> acceptPassenger(@RequestBody String requestBody) {
 		JsonObject jsonRequest = JsonParser.parseString(requestBody).getAsJsonObject();
 		try {
-			rideService.acceptRide(jsonRequest.get("driverID").getAsString(), jsonRequest.get("rideID").getAsString());
+			rideService.acceptPassenger(jsonRequest.get("driverId").getAsString(),
+					jsonRequest.get("rideID").getAsString(), jsonRequest.get("requestID").getAsString());
 			return ResponseEntity.status(HttpStatus.OK).body(null);
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
 		}
 	}
-	
+
 	@PostMapping("api/v1/enrolltoride")
 	public ResponseEntity<String> enrollToRide(@RequestBody String requestBody) {
 		JsonObject jsonRequest = JsonParser.parseString(requestBody).getAsJsonObject();
-		
+
 		try {
-			rideService.enrollUserToRide(jsonRequest.get("userId").getAsString(), jsonRequest.get("rideId").getAsString());
+			rideService.enrollToRide(jsonRequest.get("rideId").getAsString() ,jsonRequest.get("passengerId").getAsString());
 			return ResponseEntity.status(HttpStatus.CREATED).body(null);
 		} catch (NullPointerException | IllegalArgumentException e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
