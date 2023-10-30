@@ -6,5 +6,5 @@ public interface RideService {
 	public boolean cancelRide(String requesterId, String rideId) throws IllegalArgumentException;
 	public void acceptPassenger(String driverId, String rideId, String requestId) throws IllegalArgumentException;
 	public void publishRide(Ride ride);
-	public void enrollToRide(String rideId, String userId);
+	public String enrollToRide(String rideId, String userId);
 }

@@ -1,5 +1,6 @@
 package br.com.unifil.buscar;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import com.google.maps.DirectionsApi.RouteRestriction;
@@ -32,7 +33,7 @@ public class Ride {
 
 	private RideStatus rideStatus;
 	private String driverId;
-	private List<String> enrolledPassengers;
+	private List<String> enrolledPassengers = new LinkedList<String>();
 	private String rideId;
 
 	public Ride(Builder builder) {

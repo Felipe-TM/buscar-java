@@ -20,4 +20,10 @@ public class FakeRideRepo implements RideRepository{
 		fakeDB.put(ride.getRideId(), ride);	
 	}
 
+	@Override
+	public boolean cancelRide(String rideId) {
+		fakeDB.remove(rideId);
+		return true;
+	}
+
 }
