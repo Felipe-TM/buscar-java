@@ -31,13 +31,16 @@ public class RideController {
 
 		try {
 
-			Ride rideRequest = Ride.builder().rideId(UUID.randomUUID().toString())
-					.driverId(jsonRequest.get("driverId").getAsString()).origin(jsonRequest.get("origin").getAsString())
-					.destination(jsonRequest.get("destination").getAsString())
-					.arrivalTime(jsonRequest.get("arrivalTime").getAsString())
-					.departureTime(jsonRequest.get("departureTime").getAsString())
-					.language(jsonRequest.get("language").getAsString()).region(jsonRequest.get("region").getAsString())
-					.build();
+			Ride rideRequest = Ride.builder()
+				.rideId(UUID.randomUUID().toString())
+				.driverId(jsonRequest.get("driverId").getAsString())
+				.origin(jsonRequest.get("origin").getAsString())
+				.destination(jsonRequest.get("destination").getAsString())
+				.arrivalTime(jsonRequest.get("arrivalTime").getAsString())
+				.departureTime(jsonRequest.get("departureTime").getAsString())
+				.language(jsonRequest.get("language").getAsString())
+				.region(jsonRequest.get("region").getAsString())
+				.build();
 
 			if (jsonRequest.has("trafficModel"))
 				rideRequest.setTrafficModel(TrafficModel.valueOf(jsonRequest.get("trafficModel").getAsString()));
@@ -71,8 +74,8 @@ public class RideController {
 	public ResponseEntity<String> cancelRide(@RequestBody String requestBody) {
 		JsonObject jsonRequest = JsonParser.parseString(requestBody).getAsJsonObject();
 		try {
-			rideService.cancelRide(jsonRequest.get("rideId").getAsString(),
-					jsonRequest.get("requesterId").getAsString());
+			rideService.cancelRide(jsonRequest.get("requesterId").getAsString(), 
+				jsonRequest.get("rideId").getAsString());
 			return ResponseEntity.status(HttpStatus.OK).body(null);
 		} catch (IllegalArgumentException e) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);

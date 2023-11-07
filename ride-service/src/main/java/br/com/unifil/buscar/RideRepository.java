@@ -4,5 +4,5 @@ public interface RideRepository {
 	
 	void saveRide(Ride ride);
 	Ride getRideById(String rideId);
-	boolean cancelRide(String rideId);
+	void cancelRide(String rideId);
 }

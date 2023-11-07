@@ -21,9 +21,8 @@ public class FakeRideRepo implements RideRepository{
 	}
 
 	@Override
-	public boolean cancelRide(String rideId) {
-		fakeDB.remove(rideId);
-		return true;
+	public void cancelRide(String rideId) {
+		getRideById(rideId).setRideStatus(RideStatus.CANCELED);
 	}
 
 }
