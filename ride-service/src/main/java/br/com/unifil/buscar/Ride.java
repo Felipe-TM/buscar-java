@@ -2,6 +2,7 @@ package br.com.unifil.buscar;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 import com.google.maps.DirectionsApi.RouteRestriction;
 import com.google.maps.model.TrafficModel;
@@ -35,6 +36,10 @@ public class Ride {
 	private String driverId;
 	private List<String> enrolledPassengers = new LinkedList<String>();
 	private String rideId;
+	
+	public Ride() {
+	    this.rideId = UUID.randomUUID().toString();
+	}
 
 	public Ride(Builder builder) {
 		this.destination = builder.destination;
