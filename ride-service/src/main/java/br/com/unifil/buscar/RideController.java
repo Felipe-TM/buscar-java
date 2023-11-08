@@ -1,7 +1,5 @@
 package br.com.unifil.buscar;
 
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.maps.model.TrafficModel;
-import com.google.maps.model.TransitRoutingPreference;
 
 @RestController
 public class RideController {
