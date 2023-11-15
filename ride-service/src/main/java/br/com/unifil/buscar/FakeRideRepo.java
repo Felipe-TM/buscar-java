@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
-@Repository
+@Repository(value = "fakeRide")
 public class FakeRideRepo implements RideRepository{
 
 	private Map<String, Ride> fakeDB = new HashMap<String, Ride>();

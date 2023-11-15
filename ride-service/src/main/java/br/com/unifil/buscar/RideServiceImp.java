@@ -1,6 +1,7 @@
 package br.com.unifil.buscar;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -10,7 +11,7 @@ public class RideServiceImp implements RideService {
     private EnrollRepository enrollRepository;
 
     @Autowired
-    public RideServiceImp(RideRepository rideRepository, EnrollRepository enrollRepository) {
+    public RideServiceImp(@Qualifier("fakeRide") RideRepository rideRepository,@Qualifier("fakeEnroll")  EnrollRepository enrollRepository) {
 	this.rideRepository = rideRepository;
 	this.enrollRepository = enrollRepository;
     }
