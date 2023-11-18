@@ -2,10 +2,12 @@ server:
    port: 8081
    
 spring:
+   profiles:
+      active: dev
    application:
       name: RideManagerApp
    data:
       mongodb:
-         uri: mongodb+srv://buscardev:xQNTU5w97nGopYXt@cluster0.ye0q99f.mongodb.net/rides_db
-         database: rides_db
-         collection: rides
+         uri: 
+         database: 
+         collection: 
