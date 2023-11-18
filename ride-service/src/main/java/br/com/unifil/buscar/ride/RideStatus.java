@@ -1,4 +1,4 @@
-package br.com.unifil.buscar;
+package br.com.unifil.buscar.ride;
 
 public enum RideStatus {
 	

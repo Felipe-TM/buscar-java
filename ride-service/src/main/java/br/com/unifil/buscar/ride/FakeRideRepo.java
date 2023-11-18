@@ -1,4 +1,4 @@
-package br.com.unifil.buscar;
+package br.com.unifil.buscar.ride;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +23,12 @@ public class FakeRideRepo implements RideRepository{
 	@Override
 	public void cancelRide(String rideId) {
 		getRideById(rideId).setRideStatus(RideStatus.CANCELED);
+	}
+
+	@Override
+	public void updateRide(String rideId, Ride ride) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -1,8 +1,14 @@
-package br.com.unifil.buscar;
+package br.com.unifil.buscar.ride;
+
+import java.util.LinkedList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
+import br.com.unifil.buscar.enroll.EnrollRepository;
+import br.com.unifil.buscar.enroll.EnrollRequest;
+import br.com.unifil.buscar.enroll.EnrollStatus;
 
 @Service
 public class RideServiceImp implements RideService {
@@ -11,7 +17,7 @@ public class RideServiceImp implements RideService {
     private EnrollRepository enrollRepository;
 
     @Autowired
-    public RideServiceImp(@Qualifier("fakeRide") RideRepository rideRepository,@Qualifier("fakeEnroll")  EnrollRepository enrollRepository) {
+    public RideServiceImp(@Qualifier("MongoDBRepo") RideRepository rideRepository,@Qualifier("fakeEnroll")  EnrollRepository enrollRepository) {
 	this.rideRepository = rideRepository;
 	this.enrollRepository = enrollRepository;
     }
@@ -47,9 +53,9 @@ public class RideServiceImp implements RideService {
 
     @Override
     public void cancelRide(String requesterId, String rideId) throws IllegalArgumentException {
-	Ride ride = rideRepository.getRideById(rideId);
+	RideRecord ride = getRide(requesterId, rideId);
 
-	if (!ride.getDriverId().equals(requesterId) && !ride.getEnrolledPassengers().contains(requesterId))
+	if (!ride.driverId().equals(requesterId))
 	    throw new IllegalArgumentException();
 
 	rideRepository.cancelRide(rideId);
@@ -59,28 +65,23 @@ public class RideServiceImp implements RideService {
     public void acceptPassenger(String driverId, String rideId, String requestId) throws IllegalArgumentException {
 	Ride ride = rideRepository.getRideById(rideId);
 	EnrollRequest request = enrollRepository.getRequest(requestId);
-
-	if (!rideId.equals(request.getRideId()))
-	    throw new IllegalArgumentException();
-	if (!driverId.equals(ride.getRideId()))
-	    throw new IllegalArgumentException();
+	
+	if (!driverId.equals(ride.getDriverId()) && ride.getRideId().equals(request.getRideId())) throw new IllegalArgumentException();
 
 	request.setStatus(EnrollStatus.ACCEPTED);
 	enrollRepository.saveRequest(request);
-
-	ride.setEnrolledPassengers(request.getPassangerId());
+	
+	ride.setEnrolledPassengers(new LinkedList<>());
+	ride.addPassenger(request.getPassangerId());
 	ride.setRideStatus(RideStatus.WAITING_DRIVER);
-	rideRepository.saveRide(ride);
+	rideRepository.updateRide(ride.getRideId(), ride);
     }
 
     @Override
     public String enrollToRide(String rideId, String passangerId) {
 
-	Ride ride = rideRepository.getRideById(rideId);
-
-	ride.setEnrolledPassengers(passangerId);
-	rideRepository.saveRide(ride);
-
+    if (rideRepository.getRideById(rideId) == null) throw new IllegalArgumentException();
+    	
 	EnrollRequest resquest = new EnrollRequest(rideId, passangerId, EnrollStatus.SENT);
 	enrollRepository.saveRequest(resquest);
 
