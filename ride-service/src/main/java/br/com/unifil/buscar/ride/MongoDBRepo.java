@@ -43,8 +43,8 @@ public class MongoDBRepo implements RideRepository {
 	}
 
 	@Override
-	public void updateRide(String rideId, Ride ride) {
-		Bson filter = Filters.eq("_id", new ObjectId(rideId));
+	public void updateRide(Ride ride) {
+		Bson filter = Filters.eq("_id", new ObjectId(ride.getRideId()));
 		collection.findOneAndReplace(filter, ride);
 		
 	}

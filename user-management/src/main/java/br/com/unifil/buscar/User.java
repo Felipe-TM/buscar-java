@@ -124,6 +124,10 @@ public class User implements UserDetails {
     public static Builder builder() {
 	return new Builder();
     }
+    
+    public UserRecord toRecord() {
+	return new UserRecord(name, phoneNumber, email, username, password);
+    }
 
     /**
      * Builder is the class that implements the Builder pattern for the User class.

@@ -26,7 +26,7 @@ public class FakeRideRepo implements RideRepository{
 	}
 
 	@Override
-	public void updateRide(String rideId, Ride ride) {
+	public void updateRide(Ride ride) {
 		// TODO Auto-generated method stub
 		
 	}

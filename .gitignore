@@ -1,9 +1,1 @@
 /target/
-
-.yml
-
-!application.yml
-user-management/src/main/resources/application-dev.yml
-ride-service/src/main/resources/application.yml
-ride-service/src/main/resources/application.yml
-user-management/src/main/resources/application-dev.yml

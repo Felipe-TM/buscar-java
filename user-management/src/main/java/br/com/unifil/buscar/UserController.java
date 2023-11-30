@@ -86,7 +86,6 @@ public class UserController {
     @PostMapping(value = "api/v1/registrationRequest", consumes = "application/json", produces = "application/json")
     public void registrationRequest(@RequestBody User user) {
 
-	service.save(new UserRecord(user.getName(), user.getPhoneNumber(), user.getEmail(), user.getUsername(),
-		user.getPassword()));
+	service.save(user.toRecord());
     }
 }
