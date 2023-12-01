@@ -31,4 +31,22 @@ public class FakeRideRepo implements RideRepository{
 		
 	}
 
+	@Override
+	public void updateRide(String rideId, String key, String value) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public RideRecord getFieldsByName(String rideId, String... name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void insertIntoArray(String rideId, String name, String values) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

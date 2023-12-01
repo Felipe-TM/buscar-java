@@ -27,7 +27,7 @@ public record RideRecord(
 		RideStatus rideStatus,
 		String driverId,
 		List<String> enrolledPassengers,
-		String rideID
+		String rideId
 		) {
 	
 	public String toJson() {

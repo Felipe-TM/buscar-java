@@ -41,7 +41,7 @@ public class RideController {
 	    RideRecord ride = rideService.getRide(jsonRequest.get("requesterId").getAsString(),
 		    jsonRequest.get("rideID").getAsString());
 	    return ResponseEntity.status(HttpStatus.OK).body(ride.toJson());
-	} catch (IllegalArgumentException e) {
+	} catch (NullPointerException | IllegalArgumentException e) {
 	    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
 	}
     }
@@ -53,7 +53,7 @@ public class RideController {
 	    rideService.cancelRide(jsonRequest.get("requesterId").getAsString(),
 		    jsonRequest.get("rideId").getAsString());
 	    return ResponseEntity.status(HttpStatus.OK).body(null);
-	} catch (IllegalArgumentException e) {
+	} catch (NullPointerException | IllegalArgumentException e) {
 	    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
 	}
     }
@@ -65,7 +65,7 @@ public class RideController {
 	    rideService.acceptPassenger(jsonRequest.get("driverId").getAsString(),
 		    jsonRequest.get("rideId").getAsString(), jsonRequest.get("requestId").getAsString());
 	    return ResponseEntity.status(HttpStatus.OK).body(null);
-	} catch (IllegalArgumentException e) {
+	} catch (NullPointerException | IllegalArgumentException e) {
 	    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
 	}
     }

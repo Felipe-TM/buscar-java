@@ -6,4 +6,7 @@ public interface RideRepository {
 	Ride getRideById(String rideId);
 	void cancelRide(String rideId);
 	void updateRide(Ride ride);
+	void updateRide(String rideId, String name, String value);
+	RideRecord getFieldsByName(String rideId, String... name);
+	void insertIntoArray(String rideId, String name, String value);
 }
