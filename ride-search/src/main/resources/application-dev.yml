@@ -1,0 +1,11 @@
+server:
+   port: 8082
+   
+spring:
+   application:
+      name: RideSearchApp
+   data:
+      mongodb:
+         uri: mongodb+srv://ridesearch-sv:OVuZ8QemsTljTBqg@cluster0.ye0q99f.mongodb.net/rides_db
+         database: rides_db
+         collection: rides

@@ -10,8 +10,8 @@ import com.google.maps.model.TransitRoutingPreference;
 import com.google.maps.model.Unit;
 
 public record RideRecord(
-		String destination,
-		String origin,
+		Location destination,
+		Location origin,
 		boolean alternatives,
 		String arrivalTime,
 		List<RouteRestriction> avoid,

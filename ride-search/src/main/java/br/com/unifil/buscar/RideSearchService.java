@@ -1,5 +1,10 @@
 package br.com.unifil.buscar;
 
-public interface RideSearchService {
+import java.util.List;
 
+import org.bson.Document;
+
+public interface RideSearchService {
+	
+	List<Document> searchRide(SearchQuery query) throws IllegalArgumentException;
 }

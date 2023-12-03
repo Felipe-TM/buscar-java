@@ -1,53 +1,67 @@
 package br.com.unifil.buscar;
 
-import com.mongodb.client.model.geojson.Point;
+import java.util.List;
 
 public class SearchQuery {
 
-    private static final double DEFAULT_SEARCH_RADIUS = 1000.0;
+	private static final double DEFAULT_SEARCH_RADIUS = 1000.0;
+	private static final Filter DEFAULT_FILTER = Filter.DESTINATION_ONLY;
 
-    private Point origin;
-    private Point destination;
-    private double searchRadiusOrigin = DEFAULT_SEARCH_RADIUS;
-    private double searchRadiusDestination = DEFAULT_SEARCH_RADIUS;
+	private List<Double> origin;
+	private List<Double> destination;
+	private double searchRadiusOrigin = DEFAULT_SEARCH_RADIUS;
+	private double searchRadiusDestination = DEFAULT_SEARCH_RADIUS;
+	private Filter filter = DEFAULT_FILTER;
 
-    public SearchQuery(Point origin, Point destination, double searchRadiusOrigin, double searchRadiusDestination) {
-	this.origin = origin;
-	this.destination = destination;
-	this.searchRadiusOrigin = searchRadiusOrigin;
-	this.searchRadiusDestination = searchRadiusDestination;
-    }
+	public SearchQuery() {
+	}
 
-    public Point getOrigin() {
-	return origin;
-    }
+	public List<Double> getOrigin() {
+		return origin;
+	}
 
-    public void setOrigin(Point origin) {
-	this.origin = origin;
-    }
 
-    public Point getDestination() {
-	return destination;
-    }
 
-    public void setDestination(Point destination) {
-	this.destination = destination;
-    }
+	public void setOrigin(List<Double> origin) {
+		this.origin = origin;
+	}
 
-    public double getSearchRadiusOrigin() {
-	return searchRadiusOrigin;
-    }
 
-    public void setSearchRadiusOrigin(double searchRadiusOrigin) {
-	this.searchRadiusOrigin = searchRadiusOrigin;
-    }
 
-    public double getSearchRadiusDestination() {
-	return searchRadiusDestination;
-    }
+	public List<Double> getDestination() {
+		return destination;
+	}
 
-    public void setSearchRadiusDestination(double searchRadiusDestination) {
-	this.searchRadiusDestination = searchRadiusDestination;
-    }
+
+
+	public void setDestination(List<Double> destination) {
+		this.destination = destination;
+	}
+
+
+
+	public double getSearchRadiusOrigin() {
+		return searchRadiusOrigin;
+	}
+
+	public void setSearchRadiusOrigin(double searchRadiusOrigin) {
+		this.searchRadiusOrigin = searchRadiusOrigin;
+	}
+
+	public double getSearchRadiusDestination() {
+		return searchRadiusDestination;
+	}
+
+	public void setSearchRadiusDestination(double searchRadiusDestination) {
+		this.searchRadiusDestination = searchRadiusDestination;
+	}
+
+	public Filter getFilter() {
+		return filter;
+	}
+
+	public void setFilter(Filter filter) {
+		this.filter = filter;
+	}
 
 }

@@ -4,6 +4,7 @@ import static com.mongodb.MongoClientSettings.getDefaultCodecRegistry;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
+import org.bson.Document;
 import org.bson.codecs.configuration.CodecProvider;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.ClassModel;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.google.gson.JsonObject;
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.ServerApi;
@@ -20,9 +22,6 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-
-import br.com.unifil.buscar.ride.Location;
-import br.com.unifil.buscar.ride.Ride;
 
 @Configuration
 public class Config {
@@ -37,10 +36,7 @@ public class Config {
 	@Bean
 	public CodecProvider pojoCodecProvider() {
 		
-		ClassModel<Ride> ride = ClassModel.builder(Ride.class).build();
-		ClassModel<Location> location = ClassModel.builder(Location.class).build();
-		
-		return PojoCodecProvider.builder().register(ride).register(location).build();
+		return PojoCodecProvider.builder().automatic(true).build();
 	}
 
 	@Bean
@@ -66,7 +62,7 @@ public class Config {
 	}
 	
 	@Bean
-	public MongoCollection<Ride> mongoCollection(){
-		return mongoDatabase().getCollection(mongoCollection, Ride.class);
+	public MongoCollection<Document> mongoCollection(){
+		return mongoDatabase().getCollection(mongoCollection, Document.class);
 	}
 }

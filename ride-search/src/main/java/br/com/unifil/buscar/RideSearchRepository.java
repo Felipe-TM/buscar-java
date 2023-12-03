@@ -1,5 +1,10 @@
 package br.com.unifil.buscar;
 
-public interface RideSearchRepository {
+import java.util.List;
 
+import org.bson.Document;
+
+public interface RideSearchRepository {
+	
+	List<Document> searchRide(SearchQuery query);
 }
