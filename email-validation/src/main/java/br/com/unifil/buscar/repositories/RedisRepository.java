@@ -1,4 +1,4 @@
-package br.com.unifil.buscar;
+package br.com.unifil.buscar.repositories;
 
 import java.util.Optional;
 
@@ -7,6 +7,10 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.google.gson.Gson;
+
+import br.com.unifil.buscar.config.Config;
+import br.com.unifil.buscar.dto.EmailVerification;
+import br.com.unifil.buscar.dto.EmailVerificationRecord;
 
 @Repository(value = "RedisRepository")
 public class RedisRepository implements VerificationRepository {
@@ -31,7 +35,7 @@ public class RedisRepository implements VerificationRepository {
 
 	@Override
 	public void save(EmailVerificationRecord record) {
-		template.opsForValue().set(record.username(), new Gson().toJson(record));
+		template.opsForValue().set(record.verificationCode(), new Gson().toJson(record));
 	}
 
 	@Override
@@ -40,8 +44,20 @@ public class RedisRepository implements VerificationRepository {
 	}
 
 	@Override
-	public void delete(String username) {
-		template.opsForValue().getAndDelete(username);
+	public void delete(String verificationCode) {
+		template.opsForValue().getAndDelete(verificationCode);
+	}
+
+	@Override
+	public Optional<EmailVerificationRecord> getByVerificationCode(String verificationCode) {
+		
+		EmailVerification fromJson = new Gson().fromJson(template.opsForValue().get(verificationCode), EmailVerification.class);
+		
+		if (fromJson == null) return Optional.ofNullable(null);
+		
+		return Optional.ofNullable(new EmailVerificationRecord(fromJson.getUsername(), fromJson.getEmail(),
+				fromJson.getVerificationCode()));
+		
 	}
 
 }

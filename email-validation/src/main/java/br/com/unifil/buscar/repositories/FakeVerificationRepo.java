@@ -1,10 +1,12 @@
-package br.com.unifil.buscar;
+package br.com.unifil.buscar.repositories;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
+
+import br.com.unifil.buscar.dto.EmailVerificationRecord;
 
 /**
  * FakeVerificationRepo is an implementation of the {@link VerificationRepository}
@@ -16,7 +18,7 @@ import org.springframework.stereotype.Repository;
  * @version 1.0
  * @since 1.0
  * */
-@Repository(value = "FakeVerificationRepo")
+@Repository(value = "Fake1Repo")
 public abstract class FakeVerificationRepo implements VerificationRepository {
 	
 	private Map<String, EmailVerificationRecord> fakeDB = new HashMap<>();

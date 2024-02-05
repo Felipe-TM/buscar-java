@@ -1,6 +1,8 @@
-package br.com.unifil.buscar;
+package br.com.unifil.buscar.repositories;
 
 import java.util.Optional;
+
+import br.com.unifil.buscar.dto.EmailVerificationRecord;
 
 /**
  * VerificationRepository interface provides a common set of
@@ -37,7 +39,7 @@ public interface VerificationRepository{
 	 * Checks in the database if there is already a {@link EmailVerificationRecord} stored 
 	 * with given username.
 	 * <p>
-	 * If there is already a resquest with that username, returns {@code true},
+	 * If there is already a request with that username, returns {@code true},
 	 * otherwise returns {@code false}. 
 	 *  
 	 * @param username
@@ -52,6 +54,18 @@ public interface VerificationRepository{
 	 * @param username
 	 * @since 1.0s
 	 * */
-	public void delete(String username);
+	public void delete(String verificationCode);
+	
+	/**
+	 * Gets a {@link EmailVerificationRecord} from the database with given 
+	 * verification code.
+	 * <p>
+	 * It returns a nullable Optinal of an EmailVerificationRecord.  
+	 *  
+	 * @param {@link String} verificationCode
+	 * @return {@link Optional}
+	 * @since 2.0
+	 * */
+	public Optional<EmailVerificationRecord> getByVerificationCode(String verificationCode);
 	
 }

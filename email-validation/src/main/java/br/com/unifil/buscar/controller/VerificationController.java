@@ -1,4 +1,6 @@
-package br.com.unifil.buscar;
+package br.com.unifil.buscar.controller;
+
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,6 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.unifil.buscar.dto.EmailVerificationRecord;
+import br.com.unifil.buscar.exceptions.DuplicatedRequestException;
+import br.com.unifil.buscar.service.VerificationService;
+import br.com.unifil.buscar.utils.VerificationCodeGenerator;
 import jakarta.mail.MessagingException;
 
 /**
@@ -55,7 +61,7 @@ public class VerificationController {
 	public ResponseEntity<String> generateVerificationLink(@RequestBody EmailVerificationRecord verificationRequest) {
 
 		EmailVerificationRecord request = new EmailVerificationRecord(verificationRequest.username(),
-				verificationRequest.email(), service.generateVerificationCode());
+				verificationRequest.email(), VerificationCodeGenerator.generateVerificationCode());
 		
 		try {
 			service.sendVerificationEmail(request);
@@ -83,6 +89,7 @@ public class VerificationController {
 	 * @since 1.0
 	 * */
 	
+	@Deprecated
 	@GetMapping("api/v1/validate/{verificationCode}:{username}")
 	public ResponseEntity<String> validate(@PathVariable(name = "verificationCode") String verificationCode,
 			@PathVariable(name = "username") String username) {
@@ -93,6 +100,33 @@ public class VerificationController {
 			return ResponseEntity.status(HttpStatus.CREATED).body(null);
 		}		
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+	}
+	
+	/**
+	 * Gets the verification code from the path variable and 
+	 * validates with the service to check if the credentials are correct.
+	 * <p>
+	 * This method returns a {@link ResponseEntity}, where if the credentials are right, the status 
+	 * is set to <b>HttpStatus.OK</b>, meaning that the email was successfully verified,
+	 * otherwise is set to <b>HttpStatus.FORBIDDEN</b> thus denying the connection.
+	 * 
+	 * @param verificationCode a String with the verification code
+	 * @param username a String with the username
+	 * @return {@link ResponseEntity}
+	 * @since 2.0
+	 * */
+	
+	@GetMapping("api/v2/validate/{verificationCode}")
+	public ResponseEntity<String> validate(@PathVariable(name = "verificationCode") String verificatioonCode){
+		
+		try {
+			service.processRequest(verificatioonCode);
+			return ResponseEntity.status(HttpStatus.OK).body(null);
+		} catch (NoSuchElementException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		} 
+		
+		
 	}
 
 }

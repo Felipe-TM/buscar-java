@@ -1,4 +1,6 @@
-package br.com.unifil.buscar;
+package br.com.unifil.buscar.service;
+
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -7,6 +9,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import br.com.unifil.buscar.dto.EmailVerificationRecord;
+import br.com.unifil.buscar.exceptions.DuplicatedRequestException;
+import br.com.unifil.buscar.repositories.VerificationRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import net.bytebuddy.utility.RandomString;
@@ -42,7 +47,7 @@ public class VerificationServiceImp implements VerificationService {
 	 * */
 
 	@Autowired
-	public VerificationServiceImp(@Qualifier("RedisRepository") VerificationRepository repository, JavaMailSender mailSender) {
+	public VerificationServiceImp(@Qualifier("FakeRepo") VerificationRepository repository, JavaMailSender mailSender) {
 		this.COMPANY_EMAIL_ADDRESS = "";
 		this.COMPANY_NAME = "";
 		this.BASE_URL = "";
@@ -101,9 +106,16 @@ public class VerificationServiceImp implements VerificationService {
 
 		return repository.getByUsername(username).orElseThrow(() -> new IllegalArgumentException());
 	}
-	
+
 	@Override
-	public String generateVerificationCode() {
-		return RandomString.make(30);
+	public boolean processRequest(String verificationCode) throws NoSuchElementException {
+		
+		EmailVerificationRecord requestResult = repository.getByVerificationCode(verificationCode).orElseThrow();
+		
+		if(!verificationCode.equals(requestResult.verificationCode())) throw new IllegalArgumentException();
+		
+		repository.delete(verificationCode);
+		
+		return true;
 	}
 }

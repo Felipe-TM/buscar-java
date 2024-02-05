@@ -1,4 +1,4 @@
-package br.com.unifil.buscar;
+package br.com.unifil.buscar.exceptions;
 
 @SuppressWarnings("serial")
 public class DuplicatedRequestException extends RuntimeException {

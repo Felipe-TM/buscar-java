@@ -1,5 +1,9 @@
-package br.com.unifil.buscar;
+package br.com.unifil.buscar.service;
 
+import java.util.NoSuchElementException;
+
+import br.com.unifil.buscar.dto.EmailVerificationRecord;
+import br.com.unifil.buscar.exceptions.DuplicatedRequestException;
 import jakarta.mail.MessagingException;
 
 /**
@@ -21,7 +25,7 @@ public interface VerificationService {
 	 * @throws MessagingException
 	 * @since 1.0
 	 **/	
-	void sendVerificationEmail(EmailVerificationRecord record) throws DuplicatedRequestException, MessagingException;
+	public void sendVerificationEmail(EmailVerificationRecord record) throws DuplicatedRequestException, MessagingException;
 	
 	/**
 	 * Gets the verification code and compares it with the one stored
@@ -33,6 +37,7 @@ public interface VerificationService {
 	 * @return boolean
 	 * @since 1.0
 	 * */
+	@Deprecated
 	public boolean processRequest(String verificationCode, String username);
 	
 	/**
@@ -45,10 +50,14 @@ public interface VerificationService {
 	public EmailVerificationRecord getByUsername(String username);
 	
 	/**
-	 * Generates a String with the verification code.
-	 * @return String
-	 * @since 1.0
+	 * Gets the verification code and compares it with the one stored
+	 * in the database.
+	 * <p>
+	 * Returns true if the verification is successful, otherwise returns false.
+	 * @param verificationCode the String with the code
+	 * @return boolean
+	 * @since 2.0
 	 * */
-	public String generateVerificationCode();
+	public boolean processRequest(String verificationCode) throws NoSuchElementException;
 	
 }
