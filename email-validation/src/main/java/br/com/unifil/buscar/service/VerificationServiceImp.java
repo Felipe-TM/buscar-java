@@ -14,7 +14,6 @@ import br.com.unifil.buscar.exceptions.DuplicatedRequestException;
 import br.com.unifil.buscar.repositories.VerificationRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import net.bytebuddy.utility.RandomString;
 
 /**
  * VerificationServiceImp is the main service layer class, it implements the

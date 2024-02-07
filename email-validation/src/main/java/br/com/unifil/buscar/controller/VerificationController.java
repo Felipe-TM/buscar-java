@@ -90,7 +90,7 @@ public class VerificationController {
 	 * */
 	
 	@Deprecated
-	@GetMapping("api/v1/validate/{verificationCode}:{username}")
+	@PostMapping("api/v1/validate/{verificationCode}:{username}")
 	public ResponseEntity<String> validate(@PathVariable(name = "verificationCode") String verificationCode,
 			@PathVariable(name = "username") String username) {
 		
@@ -116,7 +116,7 @@ public class VerificationController {
 	 * @since 2.0
 	 * */
 	
-	@GetMapping("api/v2/validate/{verificationCode}")
+	@PostMapping("api/v2/validate/{verificationCode}")
 	public ResponseEntity<String> validate(@PathVariable(name = "verificationCode") String verificatioonCode){
 		
 		try {

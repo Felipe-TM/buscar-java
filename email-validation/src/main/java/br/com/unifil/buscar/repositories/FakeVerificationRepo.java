@@ -13,24 +13,24 @@ import br.com.unifil.buscar.dto.EmailVerificationRecord;
  * interface. It provides resources for local testing and should not be used in a 
  * real environment. 
  * 
- * @deprecated
+ * 
  * @author Felipe Torres
  * @version 1.0
  * @since 1.0
  * */
-@Repository(value = "Fake1Repo")
-public abstract class FakeVerificationRepo implements VerificationRepository {
+@Repository(value = "FakeRepo")
+public class FakeVerificationRepo implements VerificationRepository {
 	
 	private Map<String, EmailVerificationRecord> fakeDB = new HashMap<>();
 
 	@Override
-	public Optional<EmailVerificationRecord> getByUsername(String username) {
-		return Optional.ofNullable(fakeDB.get(username));
+	public Optional<EmailVerificationRecord> getByUsername(String verificationCode) {
+		return Optional.ofNullable(fakeDB.get(verificationCode));
 	}
 	
 	@Override
 	public void save(EmailVerificationRecord record) {
-		fakeDB.putIfAbsent(record.username(), record);
+		fakeDB.putIfAbsent(record.verificationCode(), record);
 	}
 	
 	@Override
@@ -41,6 +41,11 @@ public abstract class FakeVerificationRepo implements VerificationRepository {
 	@Override
 	public void delete(String username) {
 		fakeDB.remove(username);		
+	}
+
+	@Override
+	public Optional<EmailVerificationRecord> getByVerificationCode(String verificationCode) {
+		return Optional.ofNullable(fakeDB.get(verificationCode));
 	}
 
 }
