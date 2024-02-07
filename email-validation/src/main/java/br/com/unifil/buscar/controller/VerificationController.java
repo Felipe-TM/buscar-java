@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,7 +39,7 @@ public class VerificationController {
 	 * */
 	
 	@Autowired
-	public VerificationController(@Qualifier("VerificationServiceImp") VerificationService service) {
+	public VerificationController(@Qualifier("GmailSMTPService") VerificationService service) {
 		this.service = service;
 	}
 	
@@ -73,33 +72,6 @@ public class VerificationController {
 		} catch (MessagingException e) {
 			return ResponseEntity.status(HttpStatus.FAILED_DEPENDENCY).body(null);
 		}
-	}
-	
-	/**
-	 * Gets the verification code and the username from the path variable and 
-	 * validates with the service to check if the credentials are correct.
-	 * <p>
-	 * This method returns a {@link ResponseEntity}, where if the credentials are right, the status 
-	 * is set to <b>HttpStatus.CREATED</b>, meaning that the email was successfully verified,
-	 * otherwise is set to <b>HttpStatus.FORBIDDEN</b> thus denying the connection.
-	 * 
-	 * @param verificationCode a String with the verification code
-	 * @param username a String with the username
-	 * @return {@link ResponseEntity}
-	 * @since 1.0
-	 * */
-	
-	@Deprecated
-	@PostMapping("api/v1/validate/{verificationCode}:{username}")
-	public ResponseEntity<String> validate(@PathVariable(name = "verificationCode") String verificationCode,
-			@PathVariable(name = "username") String username) {
-		
-		boolean requestResult = service.processRequest(verificationCode, username);
-		
-		if (requestResult) {
-			return ResponseEntity.status(HttpStatus.CREATED).body(null);
-		}		
-		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
 	}
 	
 	/**

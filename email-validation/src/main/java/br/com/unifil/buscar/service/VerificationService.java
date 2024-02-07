@@ -32,32 +32,14 @@ public interface VerificationService {
 	 * in the database for the given username.
 	 * <p>
 	 * Returns true if the verification is successful, otherwise returns false.
+	 * 
+	 * @Deprecated
 	 * @param verificationCode the String with the code
 	 * @param username the String with the username
 	 * @return boolean
 	 * @since 1.0
 	 * */
-	@Deprecated
-	public boolean processRequest(String verificationCode, String username);
-	
-	/**
-	 * Retrives an {@link EmailVerificationRecord} from the database with 
-	 * the given username.
-	 * @param username a String with the username
-	 * @return {@link EmailVerificationRecord}
-	 * @since 1.0
-	 * */
-	public EmailVerificationRecord getByUsername(String username);
-	
-	/**
-	 * Gets the verification code and compares it with the one stored
-	 * in the database.
-	 * <p>
-	 * Returns true if the verification is successful, otherwise returns false.
-	 * @param verificationCode the String with the code
-	 * @return boolean
-	 * @since 2.0
-	 * */
+
 	public boolean processRequest(String verificationCode) throws NoSuchElementException;
 	
 }

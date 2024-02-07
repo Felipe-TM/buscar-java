@@ -24,8 +24,8 @@ import jakarta.mail.internet.MimeMessage;
  * @version 1.0
  * @since 1.0
  */
-@Service(value = "VerificationServiceImp")
-public class VerificationServiceImp implements VerificationService {
+@Service(value = "GmailSMTPService")
+public class GmailSMTPService implements VerificationService {
 
 	@Value("${spring.mail.username}")
 	private final String COMPANY_EMAIL_ADDRESS;
@@ -46,7 +46,7 @@ public class VerificationServiceImp implements VerificationService {
 	 * */
 
 	@Autowired
-	public VerificationServiceImp(@Qualifier("FakeRepo") VerificationRepository repository, JavaMailSender mailSender) {
+	public GmailSMTPService(@Qualifier("RedisRepository") VerificationRepository repository, JavaMailSender mailSender) {
 		this.COMPANY_EMAIL_ADDRESS = "";
 		this.COMPANY_NAME = "";
 		this.BASE_URL = "";
@@ -85,33 +85,9 @@ public class VerificationServiceImp implements VerificationService {
 	}
 
 	@Override
-	public boolean processRequest(String code, String username) {
-		try {
-
-			EmailVerificationRecord userRequest = getByUsername(username);
-			if (!code.equals(userRequest.verificationCode()))
-				return false;
-			repository.delete(username);
-			System.out.println("Email was Validated");
-			return true;
-
-		} catch (IllegalArgumentException e) {
-			return false;
-		}
-	}
-	
-	@Override
-	public EmailVerificationRecord getByUsername(String username) throws IllegalArgumentException {
-
-		return repository.getByUsername(username).orElseThrow(() -> new IllegalArgumentException());
-	}
-
-	@Override
 	public boolean processRequest(String verificationCode) throws NoSuchElementException {
 		
-		EmailVerificationRecord requestResult = repository.getByVerificationCode(verificationCode).orElseThrow();
-		
-		if(!verificationCode.equals(requestResult.verificationCode())) throw new IllegalArgumentException();
+		repository.getByVerificationCode(verificationCode).orElseThrow();
 		
 		repository.delete(verificationCode);
 		
