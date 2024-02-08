@@ -16,7 +16,7 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 
 /**
- * VerificationServiceImp is the main service layer class, it implements the
+ * GmailSMTPService is the main service layer class, it implements the
  * {@link VerificationService} interface, it offers all the implementation required
  * to verify an email.
  * 

@@ -21,7 +21,6 @@ public class LocalTestService implements VerificationService{
 	@Autowired
 	public LocalTestService(@Qualifier("FakeRepo") VerificationRepository repository) {
 		this.repository = repository;
-		System.out.println("\nUsing LocalTestService: This service implementation should be used for testing purposes only.\n");
 	}
 
 	@Override
