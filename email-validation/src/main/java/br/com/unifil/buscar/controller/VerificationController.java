@@ -39,7 +39,7 @@ public class VerificationController {
 	 * */
 	
 	@Autowired
-	public VerificationController(@Qualifier("GmailSMTPService") VerificationService service) {
+	public VerificationController(@Qualifier("GmailService") VerificationService service) {
 		this.service = service;
 	}
 	

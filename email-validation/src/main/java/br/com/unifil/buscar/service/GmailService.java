@@ -24,8 +24,8 @@ import jakarta.mail.internet.MimeMessage;
  * @version 1.0
  * @since 1.0
  */
-@Service(value = "GmailSMTPService")
-public class GmailSMTPService implements VerificationService {
+@Service(value = "GmailService")
+public class GmailService implements VerificationService {
 
 	@Value("${spring.mail.username}")
 	private final String COMPANY_EMAIL_ADDRESS;
@@ -46,7 +46,7 @@ public class GmailSMTPService implements VerificationService {
 	 * */
 
 	@Autowired
-	public GmailSMTPService(@Qualifier("RedisRepository") VerificationRepository repository, JavaMailSender mailSender) {
+	public GmailService(@Qualifier("RedisRepository") VerificationRepository repository, JavaMailSender mailSender) {
 		this.COMPANY_EMAIL_ADDRESS = "";
 		this.COMPANY_NAME = "";
 		this.BASE_URL = "";

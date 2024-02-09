@@ -11,6 +11,10 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
+import jakarta.mail.MessagingException;
+import jakarta.mail.Session;
+import jakarta.mail.Store;
+
 /**
  * Config is a configuration class, this is where the required dependencies are
  * declared.
@@ -47,7 +51,7 @@ public class Config {
 	 */
 
 	@Bean
-	public JavaMailSender javaMailSender() {
+	public JavaMailSender mailSenderSMTP() {
 
 		JavaMailSenderImpl javaMailSenderImpl = new JavaMailSenderImpl();
 		javaMailSenderImpl.setProtocol("smtp");
