@@ -1,4 +1,4 @@
-package br.com.unifil.buscar;
+package br.com.unifil.buscar.config;
 
 import static com.mongodb.MongoClientSettings.getDefaultCodecRegistry;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
@@ -22,8 +22,8 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
 /**
- * Config is a configuration class, this is where the required dependencies
- * are declared and instantiated.
+ * MongoDBConfig is a configuration class, it`s responsible to configure and
+ * establish a connection with Mongo Atlas.
  * 
  * @author Felipe Torres
  * @version 1.0
@@ -31,7 +31,7 @@ import com.mongodb.client.MongoDatabase;
  */
 
 @Configuration
-public class Config {
+public class MongoDBConfig {
 
 	@Value("${spring.data.mongodb.uri}")
 	private String mongoURI;
@@ -68,9 +68,9 @@ public class Config {
 	}
 	
 	/**
-	 * Creates a connection to MongoDB Atlas cluster with
+	 * Creates a connection to MongoDB Atlas cluster.
 	 * 
-	 * @return {@link CodecRegistry}
+	 * @return {@link MongoClient}
 	 * @since 1.0
 	 */
 
@@ -87,9 +87,9 @@ public class Config {
 	}
 	
 	/**
-	 * Creates a connection to the MongoDB Atlas cluster.
+	 * Retrieves a database from Mongo Atlas configured with given CodecRegistry.
 	 * 
-	 * @return {@link CodecRegistry}
+	 * @return {@link MongoDatabase}
 	 * @since 1.0
 	 */
 	
@@ -97,6 +97,13 @@ public class Config {
 	public MongoDatabase mongoDatabase() {
 		return mongoClient().getDatabase(mongoDatabse).withCodecRegistry(pojoCodecRegistry());
 	}
+	
+	/**
+	 * Retrieves a collection from MongoDB.
+	 * 
+	 * @return {@link MongoCollection}
+	 * @since 1.0
+	 */
 	
 	@Bean
 	public MongoCollection<Document> mongoCollection(){

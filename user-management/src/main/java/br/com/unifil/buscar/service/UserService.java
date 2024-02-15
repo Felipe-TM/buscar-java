@@ -1,7 +1,12 @@
-package br.com.unifil.buscar;
+package br.com.unifil.buscar.service;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
+import br.com.unifil.buscar.dto.User;
+import br.com.unifil.buscar.dto.UserRecord;
+import br.com.unifil.buscar.exceptions.UsernameNotFoundException;
+import br.com.unifil.buscar.repositories.UserRepository;
 
 /**
  * UserService is the main service layer class, it has all the business logic

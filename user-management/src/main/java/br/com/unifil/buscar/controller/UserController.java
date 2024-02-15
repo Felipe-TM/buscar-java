@@ -1,4 +1,4 @@
-package br.com.unifil.buscar;
+package br.com.unifil.buscar.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+
+import br.com.unifil.buscar.dto.User;
+import br.com.unifil.buscar.dto.UserRecord;
+import br.com.unifil.buscar.exceptions.UsernameNotFoundException;
+import br.com.unifil.buscar.service.UserService;
 
 /**
  * UserController is the main gateway of the microservice, it exposes all the

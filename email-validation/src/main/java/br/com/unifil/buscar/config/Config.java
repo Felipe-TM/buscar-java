@@ -5,11 +5,17 @@ import java.util.Properties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+
+import br.com.unifil.buscar.utils.GmailSmtpToken;
+import jakarta.mail.MessagingException;
+import jakarta.mail.Session;
+import jakarta.mail.Store;
 
 /**
  * Config is a configuration class, this is where the required dependencies are
@@ -25,12 +31,14 @@ public class Config {
 
 	@Value("${spring.mail.host}")
 	private String HOST;
+	@Value("${spring.mail.port}")
+	private int PORT;
 	@Value("${spring.mail.username}")
 	private String USERNAME;
 	@Value("${spring.mail.password}")
 	private String PASSWORD;
 
-
+	
 	
 	@Value("${spring.redis.host}")
 	private String REDIS_HOSTNAME;
@@ -46,21 +54,45 @@ public class Config {
 	 * @since 1.0
 	 */
 
-	@Bean
+	
+	@Bean 
 	public JavaMailSender javaMailSender() {
 
 		JavaMailSenderImpl javaMailSenderImpl = new JavaMailSenderImpl();
 		javaMailSenderImpl.setProtocol("smtp");
 		javaMailSenderImpl.setHost(HOST);
-		javaMailSenderImpl.setPort(587);
+		javaMailSenderImpl.setPort(PORT);
 		javaMailSenderImpl.setUsername(USERNAME);
-		javaMailSenderImpl.setPassword(PASSWORD);
-
+		javaMailSenderImpl.setPassword(GmailSmtpToken.getAccessToken());
+		
+		
 		Properties props = javaMailSenderImpl.getJavaMailProperties();
 		props.put("mail.transport.protocol", "smtp");
-		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.ssl.enable", "true");
+		props.put("mail.smtp.auth", "true");		
 		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.auth.mechanisms", "XOAUTH2");
 
+		return javaMailSenderImpl;
+	}
+	
+	@Primary
+	public JavaMailSender javaMailSenderO2Auth() throws MessagingException {
+		
+		JavaMailSenderImpl javaMailSenderImpl = new JavaMailSenderImpl();
+		javaMailSenderImpl.setProtocol("smtp");
+		javaMailSenderImpl.setHost(HOST);
+		javaMailSenderImpl.setPort(PORT);
+		javaMailSenderImpl.setUsername(USERNAME);
+		javaMailSenderImpl.setPassword(GmailSmtpToken.getAccessToken());
+		
+		Properties props = javaMailSenderImpl.getJavaMailProperties();
+		props.put("mail.transport.protocol", "smtp");
+		props.put("mail.smtp.ssl.enable", "true");
+		props.put("mail.smtp.auth", "true");		
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.auth.mechanisms", "XOAUTH2");
+		
 		return javaMailSenderImpl;
 	}
 

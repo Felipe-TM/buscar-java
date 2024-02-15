@@ -1,10 +1,13 @@
-package br.com.unifil.buscar;
+package br.com.unifil.buscar.repositories;
 
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import br.com.unifil.buscar.dto.User;
+import br.com.unifil.buscar.service.UserService;
 
 /**
  * UserRpository is a interface containing all the JPQL queries. It extends the

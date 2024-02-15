@@ -1,6 +1,22 @@
-package br.com.unifil.buscar;
+package br.com.unifil.buscar.dto;
 
 import java.util.List;
+
+import br.com.unifil.buscar.enums.Filter;
+
+/**
+ * POJO class to retrieve data from HTTP requests.
+ * Some values are established by default if they aren't specified
+ * in the HTTP request body.<br>
+ *
+ * <br>DEFAULT_SEARCH_RADIUS = 1000.0; In meters.
+ * <br>DEFAULT_FILTER = Filter.DESTINATION_ONLY
+ * 
+ * @author Felipe Torres
+ * @version 1.0
+ * @since 1.0
+ */
+
 
 public class SearchQuery {
 
