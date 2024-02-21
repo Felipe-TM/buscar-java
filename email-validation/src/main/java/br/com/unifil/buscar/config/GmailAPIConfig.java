@@ -12,6 +12,8 @@ import java.util.Properties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -20,7 +22,6 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 
@@ -49,14 +50,14 @@ public class GmailAPIConfig {
 	/**
 	 * Global instance of the JSON factory.
 	 */
-	private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
+	private static final GsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
 	/**
 	 * Directory to store authorization tokens for this application.
 	 */
 	private static final String TOKENS_DIRECTORY_PATH = "tokens";
 
 	private static final List<String> SCOPES = Collections.singletonList("https://mail.google.com/");
-	private static final String CREDENTIALS_FILE_PATH = "client_secret_290095561902.json";
+	private static final String CREDENTIALS_FILE_PATH = "credentials.json";
 
 	@Bean
 	public NetHttpTransport getNetHttpTransport() throws GeneralSecurityException, IOException {
@@ -75,7 +76,7 @@ public class GmailAPIConfig {
 	@Bean
 	public Credential getCredentials() throws IOException, GeneralSecurityException {
 		// Load client secrets.
-		InputStream in = GmailAPIConfig.class.getResourceAsStream(CREDENTIALS_FILE_PATH);
+		InputStream in = getClass().getClassLoader().getResourceAsStream(CREDENTIALS_FILE_PATH);
 		if (in == null) {
 			throw new FileNotFoundException("Resource not found: " + CREDENTIALS_FILE_PATH);
 		}
@@ -91,33 +92,28 @@ public class GmailAPIConfig {
 		// returns an authorized Credential object.
 		return credential;
 	}
-
+	
 	@Bean
-	public Session getMailSession() {
+	public JavaMailSender javaMailSenderO2Auth() throws MessagingException, IOException, GeneralSecurityException {
 		
-		Properties props = new Properties();
-		props.put("mail.smtp.port", PORT);
-		props.put("mail.smtp.host", HOST);
+		//Refreshes access token if expired
+		if (getCredentials().getExpiresInSeconds() < 0) getCredentials().refreshToken();
+
+		JavaMailSenderImpl javaMailSenderImpl = new JavaMailSenderImpl();
+		javaMailSenderImpl.setProtocol("smtp");
+		javaMailSenderImpl.setHost(HOST);
+		javaMailSenderImpl.setPort(PORT);
+		javaMailSenderImpl.setUsername(USERNAME);
+		javaMailSenderImpl.setPassword(getCredentials().getAccessToken());
+
+		Properties props = javaMailSenderImpl.getJavaMailProperties();
 		props.put("mail.transport.protocol", "smtp");
 		props.put("mail.smtp.ssl.enable", "true");
-		props.put("mail.smtp.auth.mechanisms", "XOAUTH2");
+		props.put("mail.smtp.auth", "true");		
 		props.put("mail.smtp.starttls.enable", "true");
-		
-		return Session.getInstance(props);
-	}
+		props.put("mail.smtp.auth.mechanisms", "XOAUTH2");
 
-	@Bean
-	  public Transport getMailTransport() throws MessagingException, IOException, GeneralSecurityException {
-			
-			// Refreshes access token if expired
-			if (getCredentials().getExpiresInSeconds() < 0) getCredentials().refreshToken();
-			
-			Session session = getMailSession();
-			Transport transport = session.getTransport();
-			transport.connect(USERNAME, getCredentials().getAccessToken());
-			
-			return transport;	
-			
+		return javaMailSenderImpl;
 	}
 
 }

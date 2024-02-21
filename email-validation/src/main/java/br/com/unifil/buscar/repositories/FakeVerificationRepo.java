@@ -34,8 +34,8 @@ public class FakeVerificationRepo implements VerificationRepository {
 	}
 	
 	@Override
-	public boolean isDuplicatedRequest(String username) {
-		return fakeDB.containsKey(username);
+	public boolean isDuplicatedRequest(String verificationCode) {
+		return fakeDB.containsKey(verificationCode);
 	}
 
 	@Override

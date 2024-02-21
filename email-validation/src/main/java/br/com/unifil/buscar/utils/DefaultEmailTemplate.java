@@ -1,20 +1,27 @@
 package br.com.unifil.buscar.utils;
 
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.stream.Collectors;
 
 public class DefaultEmailTemplate implements EmailTemplateProvider {
 
 	@Override
-	public InputStream loadEmailTemplate(String filePath) throws IllegalArgumentException {
+	public String loadEmailTemplate(String filePath) throws IllegalArgumentException {
 
-		ClassLoader classLoader = getClass().getClassLoader();
-		InputStream inputStream = classLoader.getResourceAsStream(filePath);
-
+		InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(filePath);		
+		String text;
+		
 		if (inputStream == null) {
 			throw new IllegalArgumentException("file not found! " + filePath);
-		} else {
-			return inputStream;
 		}
+		
+		text = new BufferedReader(new InputStreamReader(inputStream))
+        .lines()
+        .collect(Collectors.joining("\n"));
+		
+		return text;
 	}
 
 }

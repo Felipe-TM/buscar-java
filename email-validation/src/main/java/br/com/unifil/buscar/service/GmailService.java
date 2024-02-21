@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import br.com.unifil.buscar.dto.EmailVerificationRecord;
 import br.com.unifil.buscar.exceptions.DuplicatedRequestException;
 import br.com.unifil.buscar.repositories.VerificationRepository;
+import br.com.unifil.buscar.utils.DefaultEmailTemplate;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 
@@ -61,26 +62,22 @@ public class GmailService implements VerificationService {
 			throw new DuplicatedRequestException();
 
 		repository.save(record);
-
-		String verifyURL = BASE_URL + "/" + record.verificationCode() + ":" + record.username();
-		String toAddress = record.email();
-		String fromAddress = COMPANY_EMAIL_ADDRESS;
-		String senderName = COMPANY_NAME;
+		DefaultEmailTemplate template = new DefaultEmailTemplate();
+		String verifyURL = BASE_URL + "/" + record.verificationCode();
 		String subject = "Please verify your registration";
-		String content = "Dear [[name]],<br>" + "Please click the link below to verify your registration:<br>"
-				+ "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3><br>[[URL]]<br>" + "Thank you,<br>" + "[[senderName]].";
-
+		String content= template.loadEmailTemplate("assets/templates/email.html");
+		
 		MimeMessage message = mailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message);		
-		
-		helper.setFrom(fromAddress);
-		helper.setTo(toAddress);
+
+		helper.setFrom(COMPANY_EMAIL_ADDRESS);
+		helper.setTo(record.email());
 		helper.setSubject(subject);
+		
+		content = content.replace("validation_link", verifyURL);
 
-		content = content.replace("[[URL]]", verifyURL).replace("[[senderName]]", senderName).replace("[[name]]",
-				record.username());
-
-		helper.setText(content, true);
+		helper.setText(content, true);		
+		
 		mailSender.send(message);
 	}
 

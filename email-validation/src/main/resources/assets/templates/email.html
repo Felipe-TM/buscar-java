@@ -1,23 +1,100 @@
 <!DOCTYPE html>
-<html style="font-family: Inter;">
-    <body style="margin: 0px;">
-       <header style="background-color: #606060; color: white; font-size: 52px; font-weight: 900; letter-spacing: 1.60px; word-wrap: break-word; height: 65px; padding-left: 20px;
-       ">Bus<span style="color: #60D0E9;">car</span></header>
-       <section style="height: 370px; display: flex; align-items: center; justify-content: center;">
-            <div style="display: inline; text-align: center; justify-content: center;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" fill="currentColor" class="bi bi-envelope-check" viewBox="0 0 16 16">
-                    <path d="M2 2a2 2 0 0 0-2 2v8.01A2 2 0 0 0 2 14h5.5a.5.5 0 0 0 0-1H2a1 1 0 0 1-.966-.741l5.64-3.471L8 9.583l7-4.2V8.5a.5.5 0 0 0 1 0V4a2 2 0 0 0-2-2zm3.708 6.208L1 11.105V5.383zM1 4.217V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v.217l-7 4.2z"/>
-                    <path d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0m-1.993-1.679a.5.5 0 0 0-.686.172l-1.17 1.95-.547-.547a.5.5 0 0 0-.708.708l.774.773a.75.75 0 0 0 1.174-.144l1.335-2.226a.5.5 0 0 0-.172-.686"/>
-                </svg>
-                <p>Please verify your email by clicking in the button below:</p>
-                <a href="validation_link" target="validation_link">
-                    <button style="height: 45px; width: 130px; background-color: #60D0E9; color: white; font-weight: 900; font-size: 15px; letter-spacing: 2.25px; border-radius: 5px; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); border-style: none; cursor: pointer; word-wrap: break-word;">verify</button>
-                </a>
-                <p>If the above button didn’t work, consider copying and pasting <br> the below link in your browser:</p>
-                <a href="validation_link" target="validation_link">validation_link</a>
-                <p>The link expires in 2 hours</p>
-            </div>        
-        </section>
-       <footer style="height: 65px; background-color: #606060; color: white; display: flex; align-items: center; justify-content: center;"><p>Provided by Buscar email verification service</p></footer>
-    </body>
+<html style="font-family: sans-serif;">
+<head>
+    <title>Buscar</title>
+    <style>
+        body {
+            margin: 0px;
+        }
+
+        .header {
+            background-color: #606060;
+            color: white;
+            font-size: 52px;
+            font-weight: 900;
+            letter-spacing: 1.60px;
+            word-wrap: break-word;
+            height: 75px;
+            width: 100%;
+            padding-left: 20px;
+        }
+
+        .header span {
+            color: #60D0E9;
+        }
+
+        .section {
+            height: 370px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .content {
+            display: inline;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .footer {
+            height: 65px;
+            width: 100%;
+            background-color: #606060;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .verifyButton {
+            height: 45px;
+            width: 130px;
+            background-color: #60D0E9;
+            color: white;
+            font-weight: 900;
+            font-size: 15px;
+            letter-spacing: 2.25px;
+            border-radius: 5px;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            border-style: none;
+            cursor: pointer;
+            word-wrap: break-word;
+        }
+
+        a{
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <table>
+        <tbody>
+            <tr>  <div class="header">Bus<span>car</span></div>
+                <div class="section">
+                    <div class="content">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" fill="currentColor"
+                            class="bi bi-envelope-check" viewBox="0 0 16 16">
+                            <path
+                                d="M2 2a2 2 0 0 0-2 2v8.01A2 2 0 0 0 2 14h5.5a.5.5 0 0 0 0-1H2a1 1 0 0 1-.966-.741l5.64-3.471L8 9.583l7-4.2V8.5a.5.5 0 0 0 1 0V4a2 2 0 0 0-2-2zm3.708 6.208L1 11.105V5.383zM1 4.217V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v.217l-7 4.2z" />
+                            <path
+                                d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0m-1.993-1.679a.5.5 0 0 0-.686.172l-1.17 1.95-.547-.547a.5.5 0 0 0-.708.708l.774.773a.75.75 0 0 0 1.174-.144l1.335-2.226a.5.5 0 0 0-.172-.686" />
+                        </svg>
+                        <p>Please verify your email by clicking on the button below:</p>
+                        <a href="validation_link" target="validation_link">
+                            <button class="verifyButton">verify</button>
+                        </a>
+                        <p>If the above button didn’t work, consider copying and pasting <br> the below link in your browser:</p>
+                        <a href="validation_link" target="validation_link">validation_link</a>
+                        <p>The link expires in 2 hours</p>
+                    </div>
+                </div>
+                <div class="footer">
+                    <p>Provided by Buscar email verification service</p>
+                </div></tr>
+        </tbody>
+    </table>
+</body>
 </html>
