@@ -1,4 +1,6 @@
-package br.com.unifil.buscar;
+package br.com.unifil.buscar.exceptions;
+
+import br.com.unifil.buscar.service.UserService;
 
 /**
  * This is the exception that is thrown when no user with given username is

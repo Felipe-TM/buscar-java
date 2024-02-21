@@ -1,4 +1,4 @@
-package br.com.unifil.buscar;
+package br.com.unifil.buscar.dto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -137,7 +137,7 @@ public class User implements UserDetails {
      * @since 1.0
      */
 
-    static class Builder {
+    public static class Builder {
 
 	private boolean isAccountNonExpired = DEFAULT_IS_ACCOUNT_NON_EXPIRED;
 	private boolean isAccountNonLocked = DEFAULT_IS_ACCOUNT_NON_LOCKED;

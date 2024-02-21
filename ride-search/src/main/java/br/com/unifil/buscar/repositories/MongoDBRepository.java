@@ -1,4 +1,4 @@
-package br.com.unifil.buscar;
+package br.com.unifil.buscar.repositories;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.List;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import com.mongodb.client.MongoCollection;
@@ -13,13 +14,25 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.geojson.Point;
 import com.mongodb.client.model.geojson.Position;
 
+import br.com.unifil.buscar.config.MongoDBConfig;
+import br.com.unifil.buscar.dto.SearchQuery;
+
+/**
+ * MongoDBRepository it`s responsible for implementation of the search queries within
+ * the MongoDB.
+ * 
+ * @author Felipe Torres
+ * @version 1.0
+ * @since 1.0
+ */
+
 @Repository(value = "MongoDBRepository")
 public class MongoDBRepository implements RideSearchRepository {
 
 	private MongoCollection<Document> mongoCollection;
 
 	@Autowired
-	public MongoDBRepository(Config config) {
+	public MongoDBRepository(MongoDBConfig config) {
 		this.mongoCollection = config.mongoCollection();
 	}
 
@@ -50,7 +63,6 @@ public class MongoDBRepository implements RideSearchRepository {
 		default:
 			throw new IllegalArgumentException("Unexpected Enum value:" + query.getFilter());
 		}
-		
-		
+
 	}
 }

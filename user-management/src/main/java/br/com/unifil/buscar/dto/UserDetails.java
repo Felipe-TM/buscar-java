@@ -1,4 +1,4 @@
-package br.com.unifil.buscar;
+package br.com.unifil.buscar.dto;
 
 /**
  * UserDetails is the interface that specifies the required methods to have in

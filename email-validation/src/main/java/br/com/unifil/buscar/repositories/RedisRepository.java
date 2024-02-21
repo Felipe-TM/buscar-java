@@ -8,7 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.google.gson.Gson;
 
-import br.com.unifil.buscar.config.Config;
+import br.com.unifil.buscar.config.GmailAPIConfig;
+import br.com.unifil.buscar.config.RedisConfig;
 import br.com.unifil.buscar.dto.EmailVerification;
 import br.com.unifil.buscar.dto.EmailVerificationRecord;
 
@@ -18,7 +19,7 @@ public class RedisRepository implements VerificationRepository {
 	private RedisTemplate<String, String> template;
 
 	@Autowired
-	public RedisRepository(Config config) {
+	public RedisRepository(RedisConfig config) {
 		this.template = config.redisTemplate();
 	}
 

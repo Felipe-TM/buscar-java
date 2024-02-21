@@ -1,3 +1,6 @@
 /target/
 /doc/
 /src/main/resources/application-dev.yml
+*.json
+/tokens/StoredCredential
+
