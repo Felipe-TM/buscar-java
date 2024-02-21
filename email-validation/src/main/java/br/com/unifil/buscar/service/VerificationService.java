@@ -1,5 +1,6 @@
 package br.com.unifil.buscar.service;
 
+import java.io.IOException;
 import java.util.NoSuchElementException;
 
 import br.com.unifil.buscar.dto.EmailVerificationRecord;
@@ -23,9 +24,10 @@ public interface VerificationService {
 	 * @param record an {@link EmailVerificationRecord}
 	 * @throws DuplicatedRequestException
 	 * @throws MessagingException
+	 * @throws IOException 
 	 * @since 1.0
 	 **/	
-	public void sendVerificationEmail(EmailVerificationRecord record) throws DuplicatedRequestException, MessagingException;
+	public void sendVerificationEmail(EmailVerificationRecord record) throws DuplicatedRequestException, MessagingException, IOException;
 	
 	/**
 	 * Gets the verification code and compares it with the one stored

@@ -11,7 +11,7 @@ import br.com.unifil.buscar.repositories.MongoDBRepository;
  * DESTINATION_ONLY specifies that the search should occur only around
  * the area of the destination within the range given in the request.<br><br>
  * 
- * BOTH is the combination of both
+ * BOTH is the combination of both filters.
  * 
  * @author Felipe Torres
  * @version 1.0

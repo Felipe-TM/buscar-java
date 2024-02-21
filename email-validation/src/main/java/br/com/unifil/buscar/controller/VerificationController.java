@@ -1,5 +1,6 @@
 package br.com.unifil.buscar.controller;
 
+import java.io.IOException;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,7 @@ public class VerificationController {
 	 * */
 	
 	@Autowired
-	public VerificationController(@Qualifier("GmailSMTPService") VerificationService service) {
+	public VerificationController(@Qualifier("GmailService") VerificationService service) {
 		this.service = service;
 	}
 	
@@ -70,6 +71,9 @@ public class VerificationController {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
 			
 		} catch (MessagingException e) {
+			return ResponseEntity.status(HttpStatus.FAILED_DEPENDENCY).body(null);
+		} catch (IOException e) {
+			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.FAILED_DEPENDENCY).body(null);
 		}
 	}
