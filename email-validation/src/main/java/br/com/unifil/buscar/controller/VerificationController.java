@@ -84,19 +84,18 @@ public class VerificationController {
 	 * <p>
 	 * This method returns a {@link ResponseEntity}, where if the credentials are right, the status 
 	 * is set to <b>HttpStatus.OK</b>, meaning that the email was successfully verified,
-	 * otherwise is set to <b>HttpStatus.FORBIDDEN</b> thus denying the connection.
+	 * otherwise is set to <b>HttpStatus.NOT_FOUND</b>.
 	 * 
 	 * @param verificationCode a String with the verification code
-	 * @param username a String with the username
 	 * @return {@link ResponseEntity}
 	 * @since 2.0
 	 * */
 	
 	@PostMapping("api/v2/validate/{verificationCode}")
-	public ResponseEntity<String> validate(@PathVariable(name = "verificationCode") String verificatioonCode){
+	public ResponseEntity<String> validate(@PathVariable(name = "verificationCode") String verificationCode){
 		
 		try {
-			service.processRequest(verificatioonCode);
+			service.processRequest(verificationCode);
 			return ResponseEntity.status(HttpStatus.OK).body(null);
 		} catch (NoSuchElementException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
