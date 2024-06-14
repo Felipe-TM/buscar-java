@@ -6,21 +6,6 @@ spring:
       active: dev
   application:
       name: EmailVerificationApp
-
-  mail:
-        host: smtp.gmail.com
-        port: 465
-        username: 
-        properties:
-          mail:          
-            smtp:  
-              auth: true
-              starttls:
-                enable: true
-                required: true
-              connectiontimeout: 5000
-              timeout: 3000
-              writetimeout: 5000
                
 secrets:
     name: Buscar-Catch-A-Ride
