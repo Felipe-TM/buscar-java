@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.NoSuchElementException;
 
 import br.com.unifil.buscar.dto.EmailVerificationRecord;
-import br.com.unifil.buscar.exceptions.DuplicatedRequestException;
 import jakarta.mail.MessagingException;
 
 /**
@@ -27,7 +26,7 @@ public interface VerificationService {
 	 * @throws IOException 
 	 * @since 1.0
 	 **/	
-	public void sendVerificationEmail(EmailVerificationRecord record) throws DuplicatedRequestException, MessagingException, IOException;
+	public void sendVerificationEmail(EmailVerificationRecord record) throws MessagingException, IOException;
 	
 	/**
 	 * Gets the verification code and compares it with the one stored

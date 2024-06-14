@@ -23,21 +23,12 @@ public class FakeVerificationRepo implements VerificationRepository {
 	
 	private Map<String, EmailVerificationRecord> fakeDB = new HashMap<>();
 
-	@Override
-	public Optional<EmailVerificationRecord> getByUsername(String verificationCode) {
-		return Optional.ofNullable(fakeDB.get(verificationCode));
-	}
-	
+
 	@Override
 	public void save(EmailVerificationRecord record) {
 		fakeDB.putIfAbsent(record.verificationCode(), record);
 	}
 	
-	@Override
-	public boolean isDuplicatedRequest(String verificationCode) {
-		return fakeDB.containsKey(verificationCode);
-	}
-
 	@Override
 	public void delete(String username) {
 		fakeDB.remove(username);		

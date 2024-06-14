@@ -7,13 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailSendException;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.unifil.buscar.dto.EmailVerificationRecord;
-import br.com.unifil.buscar.exceptions.DuplicatedRequestException;
 import br.com.unifil.buscar.service.VerificationService;
 import br.com.unifil.buscar.utils.VerificationCodeGenerator;
 import jakarta.mail.MessagingException;
@@ -24,7 +25,7 @@ import jakarta.mail.MessagingException;
  * email verification requests. 
  * 
  * @author Felipe Torres
- * @version 1.0
+ * @version 2.0
  * @since 1.0
  */
 @RestController
@@ -65,16 +66,14 @@ public class VerificationController {
 		
 		try {
 			service.sendVerificationEmail(request);
-			return ResponseEntity.status(HttpStatus.ACCEPTED).body(null);
-			
-		} catch (DuplicatedRequestException e) {
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
-			
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body("OK");			
 		} catch (MessagingException e) {
-			return ResponseEntity.status(HttpStatus.FAILED_DEPENDENCY).body(null);
+			return ResponseEntity.status(HttpStatus.FAILED_DEPENDENCY).body(e.getMessage());
 		} catch (IOException e) {
 			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.FAILED_DEPENDENCY).body(null);
+			return ResponseEntity.status(HttpStatus.FAILED_DEPENDENCY).body(e.getMessage());
+		} catch (MailSendException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 		}
 	}
 	
@@ -92,14 +91,14 @@ public class VerificationController {
 	 * @since 2.0
 	 * */
 	
-	@PostMapping("api/v2/validate/{verificationCode}")
+	@GetMapping("api/v2/validate/{verificationCode}")
 	public ResponseEntity<String> validate(@PathVariable(name = "verificationCode") String verificatioonCode){
 		
 		try {
 			service.processRequest(verificatioonCode);
-			return ResponseEntity.status(HttpStatus.OK).body(null);
+			return ResponseEntity.status(HttpStatus.OK).body("OK");
 		} catch (NoSuchElementException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found");
 		} 
 		
 		

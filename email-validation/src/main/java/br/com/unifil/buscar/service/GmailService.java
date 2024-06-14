@@ -10,16 +10,16 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import br.com.unifil.buscar.dto.EmailVerificationRecord;
-import br.com.unifil.buscar.exceptions.DuplicatedRequestException;
 import br.com.unifil.buscar.repositories.VerificationRepository;
 import br.com.unifil.buscar.utils.DefaultEmailTemplate;
+import br.com.unifil.buscar.utils.EmailTemplateProvider;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 
 /**
  * GmailSMTPService is the main service layer class, it implements the
- * {@link VerificationService} interface, it offers all the implementation required
- * to verify an email.
+ * {@link VerificationService} interface, it offers all the implementation
+ * required to verify an email.
  * 
  * @author Felipe Torres
  * @version 1.0
@@ -29,65 +29,63 @@ import jakarta.mail.internet.MimeMessage;
 public class GmailService implements VerificationService {
 
 	@Value("${spring.mail.username}")
-	private final String COMPANY_EMAIL_ADDRESS;
+	private String COMPANY_EMAIL_ADDRESS;
 	@Value("${secrets.name}")
-	private final String COMPANY_NAME;
+	private String COMPANY_NAME;
 	@Value("${secrets.baseUrl}")
-	private final String BASE_URL;
+	private String BASE_URL;
 
 	private final VerificationRepository repository;
 	private final JavaMailSender mailSender;
-	
+	private final EmailTemplateProvider templateProvider;
+
 	/**
 	 * Class constructor specifying the dependencies to be injected.
 	 * 
-	 * @param repository A {@link VerificationRepository} implementation, as specified in the {@code @Qualifier} annotation. 
-	 * @param mailSender A {@link JavaMailSender} implementation.
+	 * @param repository 		A {@link VerificationRepository} implementation, as
+	 *                   		specified in the {@code @Qualifier} annotation.
+	 * @param mailSender 		A {@link JavaMailSender} implementation.
+	 * @param templateProvider	An implementation of {@link EmailTemplateProvider}
 	 * @since 1.0
-	 * */
+	 */
 
 	@Autowired
-	public GmailService(@Qualifier("RedisRepository") VerificationRepository repository, JavaMailSender mailSender) {
-		this.COMPANY_EMAIL_ADDRESS = "";
-		this.COMPANY_NAME = "";
-		this.BASE_URL = "";
+	public GmailService(@Qualifier("FakeRepo") VerificationRepository repository, JavaMailSender mailSender,
+			@Qualifier("DefaultTemplateProvider") EmailTemplateProvider templateProvider) {
 		this.repository = repository;
 		this.mailSender = mailSender;
+		this.templateProvider = templateProvider;
 	}
 
 	@Override
-	public void sendVerificationEmail(EmailVerificationRecord record)
-			throws DuplicatedRequestException, MessagingException {
-		if (repository.isDuplicatedRequest(record.username()))
-			throw new DuplicatedRequestException();
+	public void sendVerificationEmail(EmailVerificationRecord request) throws MessagingException {
 
-		repository.save(record);
-		DefaultEmailTemplate template = new DefaultEmailTemplate();
-		String verifyURL = BASE_URL + "/" + record.verificationCode();
-		String subject = "Please verify your registration";
-		String content= template.loadEmailTemplate("assets/templates/email.html");
-		
+		repository.save(request);
+		String verifyURL = BASE_URL + "/" + request.verificationCode();
+		String subject = request.username() + ", please verify your registration";
+		String content = templateProvider.loadEmailTemplate("assets/templates/email.html");
+
 		MimeMessage message = mailSender.createMimeMessage();
-		MimeMessageHelper helper = new MimeMessageHelper(message);		
+		MimeMessageHelper helper = new MimeMessageHelper(message);
 
 		helper.setFrom(COMPANY_EMAIL_ADDRESS);
-		helper.setTo(record.email());
+		helper.setTo(request.email());
 		helper.setSubject(subject);
-		
+
 		content = content.replace("validation_link", verifyURL);
 
-		helper.setText(content, true);		
-		
+		helper.setText(content, true);
+
 		mailSender.send(message);
 	}
 
 	@Override
 	public boolean processRequest(String verificationCode) throws NoSuchElementException {
-		
+
 		repository.getByVerificationCode(verificationCode).orElseThrow();
-		
+
 		repository.delete(verificationCode);
-		
+
 		return true;
 	}
 }

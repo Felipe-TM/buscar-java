@@ -72,6 +72,7 @@ public class GmailAPIConfig {
 	 * @throws IOException              If the credentials.json file cannot be
 	 *                                  found.
 	 * @throws GeneralSecurityException
+	 * @since 1.0
 	 */
 	@Bean
 	public Credential getCredentials() throws IOException, GeneralSecurityException {
@@ -93,6 +94,15 @@ public class GmailAPIConfig {
 		return credential;
 	}
 	
+	/**
+	 * Instantiates a JavaMailSender implementation.
+	 *
+	 * @return An JavaMailSender implementation.
+	 * @throws IOException              
+	 * @throws GeneralSecurityException
+	 * @throws MessagingException
+	 * @since 1.0
+	 */	
 	@Bean
 	public JavaMailSender javaMailSenderO2Auth() throws MessagingException, IOException, GeneralSecurityException {
 		

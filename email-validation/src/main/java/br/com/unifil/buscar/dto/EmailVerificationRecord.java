@@ -5,6 +5,9 @@ package br.com.unifil.buscar.dto;
  *  information, such as username and the email to send the 
  *  verification.
  *  
+ *  @param username String
+ *  @param email String
+ *  @param verificationCode String
  *  @author Felipe Torres
  *  @version 1.0
  *  @since 1.0  

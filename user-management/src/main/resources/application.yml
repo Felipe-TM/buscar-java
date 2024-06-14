@@ -6,7 +6,7 @@ spring:
       name: UserManagementApp
    datasource:
       url: jdbc:mariadb://localhost:3300/userdb_01
-      driverClassName: org.mariadb.jdbc.Driver
+      driver-class-name: org.mariadb.jdbc.Driver
       username: root
       password: 123456
       
@@ -17,3 +17,9 @@ spring:
   
       database-plataform: org.hibernate.dialect.MariaDB102Dialect
       show-sql: true
+      
+services:
+   email:
+      url: http://localhost:8090/
+      endpoints:
+         sendEmail: api/v1/generateValidationLink

@@ -24,24 +24,8 @@ public class RedisRepository implements VerificationRepository {
 	}
 
 	@Override
-	public Optional<EmailVerificationRecord> getByUsername(String username) {
-
-		EmailVerification fromJson = new Gson().fromJson(template.opsForValue().get(username), EmailVerification.class);
-		
-		if (fromJson == null) return Optional.ofNullable(null);
-
-		return Optional.ofNullable(new EmailVerificationRecord(fromJson.getUsername(), fromJson.getEmail(),
-				fromJson.getVerificationCode()));
-	}
-
-	@Override
 	public void save(EmailVerificationRecord record) {
 		template.opsForValue().set(record.verificationCode(), new Gson().toJson(record));
-	}
-
-	@Override
-	public boolean isDuplicatedRequest(String username) {
-		return getByUsername(username).isPresent();
 	}
 
 	@Override

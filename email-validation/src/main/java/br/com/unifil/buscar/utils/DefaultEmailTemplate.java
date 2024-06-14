@@ -5,6 +5,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
+import org.springframework.stereotype.Service;
+
+@Service("DefaultTemplateProvider")
 public class DefaultEmailTemplate implements EmailTemplateProvider {
 
 	@Override

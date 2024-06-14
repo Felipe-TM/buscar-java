@@ -15,17 +15,6 @@ import br.com.unifil.buscar.dto.EmailVerificationRecord;
 
 public interface VerificationRepository{
 	
-	/**
-	 * Gets a {@link EmailVerificationRecord} from the database with given 
-	 * username.
-	 * <p>
-	 * It returns either an EmailVerificationRecord or {@code null} 
-	 *  
-	 * @param username
-	 * @return {@link Optional}
-	 * @since 1.0
-	 * */
-	public Optional<EmailVerificationRecord> getByUsername(String username);
 	
 	/**
 	 * Saves the provided {@link EmailVerificationRecord} to the database.
@@ -45,14 +34,6 @@ public interface VerificationRepository{
 	 * @param username
 	 * @return {@code boolean}
 	 * @since 1.0
-	 * */
-	public boolean isDuplicatedRequest(String username);
-	
-	/**
-	 * Deletes a {@link EmailVerificationRecord} from the database.
-	 *  
-	 * @param username
-	 * @since 1.0s
 	 * */
 	public void delete(String verificationCode);
 	

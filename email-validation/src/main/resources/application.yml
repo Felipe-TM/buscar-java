@@ -24,4 +24,4 @@ spring:
                
 secrets:
     name: Buscar-Catch-A-Ride
-    baseUrl: http://localhost:8090/api/v1/validate
+    baseUrl: http://localhost:8090/api/v2/validate

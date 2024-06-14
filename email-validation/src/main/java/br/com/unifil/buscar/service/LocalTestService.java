@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import br.com.unifil.buscar.dto.EmailVerificationRecord;
-import br.com.unifil.buscar.exceptions.DuplicatedRequestException;
 import br.com.unifil.buscar.repositories.VerificationRepository;
 import jakarta.mail.MessagingException;
 
@@ -25,7 +24,7 @@ public class LocalTestService implements VerificationService{
 
 	@Override
 	public void sendVerificationEmail(EmailVerificationRecord record)
-			throws DuplicatedRequestException, MessagingException {
+			throws MessagingException {
 		repository.save(record);
 		
 		System.out.print("\nVerification code: ");
